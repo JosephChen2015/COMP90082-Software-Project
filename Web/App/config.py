@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-config.py file is used for Firebase configuration
+config.py file is used for web app configuration
 """
 
 """
