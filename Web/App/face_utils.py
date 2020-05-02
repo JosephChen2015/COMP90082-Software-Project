@@ -5,16 +5,18 @@ import img_utils
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 class FaceUtils:
     names = []
     images = []
     face_encodings = []
 
-    def __init__(self, img_path="./knowns/"):
+    def __init__(self, img_path="./Web/App/knowns/"):
         self.img_path = img_path
         self.load_images()
         self.encoding_faces()
@@ -57,15 +59,16 @@ class FaceUtils:
         unknown_image_base64_string = img_utils.buffer_to_base64_string(unknown_image_buffer)
 
         message = {"image": unknown_image_base64_string, "classified": classified, "results": name_distance}
+        print(message)
 
         return message, name_distance, unknown_image_buffer
+
 
 # face_util = FaceUtils()
 # unknown_path = "./unknowns/"
 # for u in os.listdir(unknown_path):
 #     if not u.startswith(".") and allowed_file(u):
 #         img = open(unknown_path + u, 'rb')
-#         res, classified, name_distance = face_util.face_match_img(img)
-#         cv2.imshow("Output", res)
-#         cv2.waitKey(0)
+#         message, name_distance, unknown_image_buffer = face_util.face_match_img(img)
+#         print(message)
 #         print(name_distance)

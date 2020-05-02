@@ -18,6 +18,8 @@ storage = firebase.storage()
 database = firebase.database()
 # auth = firebase.auth()
 
+face_utils = FaceUtils()
+
 app = Flask(__name__)
 app.config.from_object(config)
 
@@ -27,6 +29,7 @@ app.config.from_object(config)
 # Error messages to be sent if the user passes in invalid json or error on image processing possibly due to bad data
 JSON_ERROR_INVALID_JSON = {"Error": "Failed to parse json, invalid format"}
 JSON_ERROR_CLASSIFICATION_FAILED = {"Error": "Failed to process image, try another image"}
+
 
 # # Index page
 # @app.route('/', methods=['GET', 'POST'])
@@ -138,7 +141,6 @@ JSON_ERROR_CLASSIFICATION_FAILED = {"Error": "Failed to process image, try anoth
 #     return ASK_LOGIN_TEXT
 
 
-
 @app.route('/recog_api', methods=['GET', 'POST'])
 def recog_api():
     """
@@ -166,14 +168,16 @@ def recog_api():
 
     try:
         # rgb_img = img_utils.base64_to_rgb(img_base64)
-        message, name_distance, unknown_image_buffer = FaceUtils().face_match_img("test.jpg")
-        cv2.imshow("Output", unknown_image_buffer)
-        cv2.waitKey(0)
-        return message
+        message, name_distance, unknown_image_buffer = face_utils.face_match_img("./Web/App/unknowns/test.jpg")
+        # print(message)
+        # cv2.imshow("Output", unknown_image_buffer)
+        # cv2.waitKey(0)
+        return render_template("base.html", img_stream=message)
         # return jsonify(message)
     except:
         return JSON_ERROR_CLASSIFICATION_FAILED
         # return jsonify(JSON_ERROR_CLASSIFICATION_FAILED)
+
 
 @app.route('/recog_upload_api', methods=['GET', 'POST'])
 def recog_upload_api():
@@ -205,44 +209,46 @@ def recog_upload_api():
 
     try:
         # rgb_img = img_utils.base64_to_rgb(img_base64)
-        message, name_distance, unknown_image_buffer = FaceUtils().face_match_img("test.jpg")
+        message, name_distance, unknown_image_buffer = FaceUtils().face_match_img("./unknowns/test.jpg")
 
         if message["classified"] is False:
             return message
             # return jsonify(message)
         else:
             # if 'email' in session:
-                time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
+            time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
 
-                # # Upload the classification result to the database
-                # entry_name = database.child('users/' + session.get('user_id')).push({
-                #     "image_name": img_name, "upload_time": time, "result": face_predictions})["name"]
-                #
-                # # Upload the labelled image to the storage
-                # image = storage.child('upload/' + session.get('user_id') + '/' + entry_name + '/' + entry_name + '.jpg')
-                # image.put(boxed_img_buff)
-                #
-                # # Upload the labelled image location to the database
-                # img_location = storage.child('upload/' + session.get('user_id') + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
-                # database.child('users').child(session.get('user_id')).child(entry_name).update({"image_location": img_location})
+            # # Upload the classification result to the database
+            # entry_name = database.child('users/' + session.get('user_id')).push({
+            #     "image_name": img_name, "upload_time": time, "result": face_predictions})["name"]
+            #
+            # # Upload the labelled image to the storage
+            # image = storage.child('upload/' + session.get('user_id') + '/' + entry_name + '/' + entry_name + '.jpg')
+            # image.put(boxed_img_buff)
+            #
+            # # Upload the labelled image location to the database
+            # img_location = storage.child('upload/' + session.get('user_id') + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
+            # database.child('users').child(session.get('user_id')).child(entry_name).update({"image_location": img_location})
 
-                # Upload the classification result to the database
-                entry_name = database.child('users/' + 'jingyin').push({
-                    "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
+            # Upload the classification result to the database
+            entry_name = database.child('users/' + 'jingyin').push({
+                "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
 
-                # Upload the labelled image to the storage
-                image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
-                image.put(unknown_image_buffer)
+            # Upload the labelled image to the storage
+            image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
+            image.put(unknown_image_buffer)
 
-                # Upload the labelled image location to the database
-                img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
-                database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
+            # Upload the labelled image location to the database
+            img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(
+                None)
+            database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
 
             return message
-            # return jsonify(message)
+        # return jsonify(message)
     except:
         return JSON_ERROR_CLASSIFICATION_FAILED
         # return jsonify(JSON_ERROR_CLASSIFICATION_FAILED)
+
 
 # Test the function of upload to database and storage
 # @app.route('/', methods=['GET', 'POST'])
