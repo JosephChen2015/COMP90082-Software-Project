@@ -17,6 +17,7 @@ firebase = firebase.Firebase(config.firebaseConfig)
 storage = firebase.storage()
 database = firebase.database()
 # auth = firebase.auth()
+face_utils = FaceUtils()
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -166,9 +167,7 @@ def recog_api():
 
     try:
         # rgb_img = img_utils.base64_to_rgb(img_base64)
-        message, name_distance, unknown_image_buffer = FaceUtils().face_match_img("test.jpg")
-        cv2.imshow("Output", unknown_image_buffer)
-        cv2.waitKey(0)
+        message, name_distance, unknown_image_buffer = face_utils.face_match_img("test.jpg")
         return message
         # return jsonify(message)
     except:
@@ -205,14 +204,14 @@ def recog_upload_api():
 
     try:
         # rgb_img = img_utils.base64_to_rgb(img_base64)
-        message, name_distance, unknown_image_buffer = FaceUtils().face_match_img("test.jpg")
+        message, name_distance, unknown_image_buffer = face_utils.face_match_img("test.jpg")
 
         if message["classified"] is False:
             return message
             # return jsonify(message)
         else:
             # if 'email' in session:
-                time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
+                # time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
 
                 # # Upload the classification result to the database
                 # entry_name = database.child('users/' + session.get('user_id')).push({
@@ -226,17 +225,31 @@ def recog_upload_api():
                 # img_location = storage.child('upload/' + session.get('user_id') + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
                 # database.child('users').child(session.get('user_id')).child(entry_name).update({"image_location": img_location})
 
-                # Upload the classification result to the database
-                entry_name = database.child('users/' + 'jingyin').push({
-                    "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
+                # # Upload the classification result to the database
+                # entry_name = database.child('users/' + 'jingyin').push({
+                #     "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
+                #
+                # # Upload the labelled image to the storage
+                # image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
+                # image.put(unknown_image_buffer)
+                # 
+                # # Upload the labelled image location to the database
+                # img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
+                # database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
 
-                # Upload the labelled image to the storage
-                image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
-                image.put(unknown_image_buffer)
+            time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
 
-                # Upload the labelled image location to the database
-                img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
-                database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
+            # Upload the classification result to the database
+            entry_name = database.child('users/' + 'jingyin').push({
+                "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
+
+            # Upload the labelled image to the storage
+            image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
+            image.put(unknown_image_buffer)
+
+            # Upload the labelled image location to the database
+            img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
+            database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
 
             return message
             # return jsonify(message)
