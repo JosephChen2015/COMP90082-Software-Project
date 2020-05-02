@@ -211,7 +211,7 @@ def recog_upload_api():
             return message
             # return jsonify(message)
         else:
-            if 'email' in session:
+            # if 'email' in session:
                 time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
 
                 # # Upload the classification result to the database
