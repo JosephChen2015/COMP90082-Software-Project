@@ -166,7 +166,7 @@ def recog_api():
     #     return jsonify(JSON_ERROR_INVALID_JSON)
 
     try:
-        # rgb_img = img_utils.base64_to_rgb(img_base64)
+        # rgb_img = img_utils.base64_string_to_rgb(img_base64)
         message, name_distance, unknown_image_buffer = face_utils.face_match_img("test.jpg")
         return message
         # return jsonify(message)
@@ -203,7 +203,7 @@ def recog_upload_api():
     #     return jsonify(JSON_ERROR_INVALID_JSON)
 
     try:
-        # rgb_img = img_utils.base64_to_rgb(img_base64)
+        # rgb_img = img_utils.base64_string_to_rgb(img_base64)
         message, name_distance, unknown_image_buffer = face_utils.face_match_img("test.jpg")
 
         if message["classified"] is False:
@@ -225,28 +225,16 @@ def recog_upload_api():
                 # img_location = storage.child('upload/' + session.get('user_id') + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
                 # database.child('users').child(session.get('user_id')).child(entry_name).update({"image_location": img_location})
 
-                # # Upload the classification result to the database
-                # entry_name = database.child('users/' + 'jingyin').push({
-                #     "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
-                #
-                # # Upload the labelled image to the storage
-                # image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
-                # image.put(unknown_image_buffer)
-                # 
-                # # Upload the labelled image location to the database
-                # img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
-                # database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
-
             time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
-
+        
             # Upload the classification result to the database
             entry_name = database.child('users/' + 'jingyin').push({
                 "image_name": "test.jpg", "upload_time": time, "result": name_distance})["name"]
-
+        
             # Upload the labelled image to the storage
             image = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg')
             image.put(unknown_image_buffer)
-
+        
             # Upload the labelled image location to the database
             img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
             database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})

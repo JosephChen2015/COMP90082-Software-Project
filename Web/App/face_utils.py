@@ -52,8 +52,8 @@ class FaceUtils:
                     name_distance.append(name_distance_json)
                     cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0),
                                 2)
-        unknown_image_rgb = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
-        unknown_image_buffer = img_utils.rgb_to_buffer(unknown_image_rgb)
+        # unknown_image_rgb = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
+        unknown_image_buffer = img_utils.rgb_to_buffer(unknown_image)
         unknown_image_base64_string = img_utils.buffer_to_base64_string(unknown_image_buffer)
 
         message = {"image": unknown_image_base64_string, "classified": classified, "results": name_distance}
