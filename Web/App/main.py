@@ -168,11 +168,9 @@ def recog_api():
     try:
         # rgb_img = img_utils.base64_string_to_rgb(img_base64)
         message, name_distance, unknown_image_buffer = face_utils.face_match_img("test.jpg")
-        return message
-        # return jsonify(message)
+        return jsonify(message)
     except:
-        return JSON_ERROR_CLASSIFICATION_FAILED
-        # return jsonify(JSON_ERROR_CLASSIFICATION_FAILED)
+        return jsonify(JSON_ERROR_CLASSIFICATION_FAILED)
 
 @app.route('/recog_upload_api', methods=['GET', 'POST'])
 def recog_upload_api():
@@ -207,8 +205,7 @@ def recog_upload_api():
         message, name_distance, unknown_image_buffer = face_utils.face_match_img("test.jpg")
 
         if message["classified"] is False:
-            return message
-            # return jsonify(message)
+            return jsonify(message)
         else:
             # if 'email' in session:
                 # time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
@@ -239,11 +236,9 @@ def recog_upload_api():
             img_location = storage.child('upload/' + 'jingyin' + '/' + entry_name + '/' + entry_name + '.jpg').get_url(None)
             database.child('users').child('jingyin').child(entry_name).update({"image_location": img_location})
 
-            return message
-            # return jsonify(message)
+            return jsonify(message)
     except:
-        return JSON_ERROR_CLASSIFICATION_FAILED
-        # return jsonify(JSON_ERROR_CLASSIFICATION_FAILED)
+        return jsonify(JSON_ERROR_CLASSIFICATION_FAILED)
 
 # Test the function of upload to database and storage
 # @app.route('/', methods=['GET', 'POST'])
