@@ -10,13 +10,12 @@ from datetime import datetime
 import json
 import requests
 import imgUtils
-from faceUtils import FaceUtils
+# from faceUtils import FaceUtils
 
 firebase = firebase.Firebase(config.firebaseConfig)
 storage = firebase.storage()
 database = firebase.database()
 # auth = firebase.auth()
-faceUtils = FaceUtils()
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -138,6 +137,7 @@ errorClassificationFailed = {"Error": "Failed to process image, try another imag
 #         return redirect(url_for('login'))
 #     return ASK_LOGIN_TEXT
 
+
 @app.route('/recogApi', methods=['GET', 'POST'])
 def recogApi():
     """
@@ -163,12 +163,13 @@ def recogApi():
     # except:
     #     return jsonify(errorInvalidJson)
 
-    try:
-        # rgbImg = imgUtils.base64StringToRgb(imgBase64)
-        message = faceUtils.face_match_img("test.jpg")
-        return jsonify(message)
-    except:
-        return jsonify(errorClassificationFailed)
+    # try:
+    #     rgbImg = imgUtils.base64StringToRgb(imgBase64)
+    #     message = faceUtils.face_match_img("test.jpg")
+    #     return jsonify(message)
+    # except:
+    #     return jsonify(errorClassificationFailed)
+
 
 @app.route('/recogUploadApi', methods=['GET', 'POST'])
 def recogUploadApi():
@@ -199,46 +200,52 @@ def recogUploadApi():
     #     email = request["email"]
     # except:
     #     return jsonify(errorInvalidJson)
+    #
+    # try:
+    #     rgbImg = imgUtils.base64StringToRgb(imgBase64)
+    #     message, nameDistance, imgBuffer = faceUtils.face_match_img("test.jpg")
+    #
+    #     if message["classified"] is False:
+    #         return jsonify(message)
+    #     else:
+    #         if email:
+    #             time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
+    #
+    #             # Upload the classification result to the database
+    #             entryName = database.child('users/' + userId + '/' + 'recognitions').push({
+    #                 "imageName": imgName, "time": time, "result": nameDistance, "userId": userId, "description": "null"})["name"]
+    #
+    #             # Upload the labelled image to the storage
+    #             img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
+    #             img.put(imgBuffer)
+    #
+    #             # Upload the labelled image url to the database
+    #             imgUrl = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').get_url(None)
+    #             database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+    #
+    #         return jsonify(message)
+    # except:
+    #     return jsonify(errorClassificationFailed)
 
-    try:
-        # rgbImg = imgUtils.base64StringToRgb(imgBase64)
-        message, nameDistance, imgBuffer = faceUtils.face_match_img("test.jpg")
 
-        if message["classified"] is False:
-            return jsonify(message)
-        else:
-            # if email:
-            #     time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
-            #
-            #     # Upload the classification result to the database
-            #     entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-            #         "imageName": imgName, "time": time, "result": nameDistance, "userId": userId, "description": "null"})["name"]
-            #
-            #     # Upload the labelled image to the storage
-            #     img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
-            #     img.put(imgBuffer)
-            #
-            #     # Upload the labelled image url to the database
-            #     imgUrl = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').get_url(None)
-            #     database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+# Test the function of upload to database and storage
+@app.route('/', methods=['GET', 'POST'])
+def helloWorld():
+    time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
 
-            time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
+    # Upload the classification result to the database
+    entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
+        "imageName": "test.jpg", "time": time, "result": "null", "userId": "userId", "description": "null"})["name"]
 
-            # Upload the classification result to the database
-            entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
-                "imageName": "test.jpg", "time": time, "result": nameDistance, "userId": "userId", "description": "null"})["name"]
+    # Upload the labelled image to the storage
+    img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
+    img.put("test.jpg")
 
-            # Upload the labelled image to the storage
-            img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
-            img.put(imgBuffer)
+    # Upload the labelled image url to the database
+    imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
+    database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
 
-            # Upload the labelled image url to the database
-            imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
-            database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
-
-            return jsonify(message)
-    except:
-        return jsonify(errorClassificationFailed)
+    return 'Hello, World!'
 
 # Main function
 if __name__ == '__main__':
