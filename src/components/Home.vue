@@ -31,7 +31,9 @@
                         <v-btn x-large color="primary">Login</v-btn>
                   </v-col>
                   <v-col align-self="center" md="1">
-                        <v-btn x-large color="primary">Upload</v-btn>
+                        <router-link tag="v-card" to="/Upload">
+                              <v-btn x-large color="primary">Upload</v-btn>
+                        </router-link>
                   </v-col>
             </v-row>
 <!--            <v-row class="mx-auto">-->

@@ -12,6 +12,7 @@ import * as firebase from 'firebase'
 import store from './store'
 
 Vue.use(VueAwesomeSwiper)
+Vue.use(vuetify)
 Vue.config.productionTip = false
 
 new Vue({
@@ -30,5 +31,12 @@ new Vue({
       appId: "1:877617425337:web:9d910dc5efbfb376aaa468",
       measurementId: "G-LY6LWF8B9Y"
     })
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.$store.dispatch('autoLogin',user)
+        this.$store.dispatch('recognitionAll')
+      }
+    })
+    // this.$store.dispatch('recognitionAll')
   }
 }).$mount('#app')

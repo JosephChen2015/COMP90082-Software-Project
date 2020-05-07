@@ -4,12 +4,14 @@
   <v-app>
     <v-app-bar class="blue lighten-4" elevate-on-scroll scroll-target="#scrolling-techniques" style="height: 64px">
       <v-app-bar-nav-icon @click="sideNav = !sideNav"></v-app-bar-nav-icon>
-      <v-toolbar-title>Celebrities Recognition</v-toolbar-title>
+      <router-link tag="v-card" to="/" style="cursor:pointer"><v-toolbar-title>Celebrities Recognition</v-toolbar-title></router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items style="height: 59px">
         <v-btn v-if="menuItems.login.login" class="blue lighten-4">
-          <v-icon left class="mdi mdi-login"></v-icon>
-          Login
+          <router-link tag="v-card" to="/Login">
+            <v-icon left class="mdi mdi-login"></v-icon>
+            Login
+          </router-link>
         </v-btn>
         <v-btn v-if="menuItems.register.register" class="blue lighten-4">
           <router-link tag="v-card" to="/Register">
@@ -21,11 +23,9 @@
           <v-icon left class="mdi mdi-login"></v-icon>
           History
         </v-btn>
-        <v-btn v-if="menuItems.logout.logout" class="blue lighten-4">
-          <router-link tag="v-card" to="/Register">
+        <v-btn v-if="menuItems.logout.logout" @click="onLogout" class="blue lighten-4">
             <v-icon left class="mdi mdi-logout"></v-icon>
             Log Out
-          </router-link>
         </v-btn>
 
 
@@ -115,6 +115,11 @@
       },
       userIsAuthenticated(){
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    },
+    methods:{
+      onLogout(){
+        this.$store.dispatch('logout')
       }
     }
     // data: () => ({

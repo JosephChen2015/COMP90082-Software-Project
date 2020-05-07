@@ -1,23 +1,12 @@
 <template>
     <v-container>
         <v-flex xs12 sm6 offset-sm3>
-            <v-card name="registerCard">
+            <v-card name="LoginCard">
                 <v-card-text>
                     <v-container>
-                        <form @submit.prevent="onRegister">
+                        <form @submit.prevent="onLogin">
                             <v-layout row>
                                 <v-flex xs12>
-                                    <v-text-field
-                                            solo
-                                            name="username"
-                                            lable="Username"
-                                            id="username"
-                                            v-model="username"
-                                            type="username"
-                                            required
-                                            placeholder="Username">
-
-                                    </v-text-field>
                                     <v-text-field
                                             solo
                                             name="email"
@@ -48,23 +37,7 @@
                             </v-layout>
                             <v-layout row>
                                 <v-flex xs12>
-                                    <v-text-field
-                                            solo
-                                            required
-                                            placeholder="Confirm Password"
-                                            name="confirmPassword"
-                                            lable="Confirm Password"
-                                            id="confirmPassword"
-                                            v-model="confirmPassword"
-                                            type="password"
-                                            :rules="[comparePasswords]">
-
-                                    </v-text-field>
-                                </v-flex>
-                            </v-layout>
-                            <v-layout row>
-                                <v-flex xs12>
-                                    <v-btn type="submit">Register</v-btn>
+                                    <v-btn type="submit">Login</v-btn>
                                 </v-flex>
                             </v-layout>
                         </form>
@@ -79,16 +52,12 @@
     export default{
         data(){
             return{
-                username:'',
                 email:'',
                 password:'',
-                confirmPassword:'',
+
             }
         },
         computed:{
-            comparePasswords(){
-                return this.password !== this.confirmPassword ? 'Password does not match!':''
-            },
             user(){
                 return this.$store.getters.user
             }
@@ -101,8 +70,8 @@
             }
         },
         methods:{
-            onRegister(){
-                this.$store.dispatch('register',{username:this.username,email:this.email,password:this.password})
+            onLogin(){
+                this.$store.dispatch('login',{email:this.email,password:this.password})
             }
         }
     }
