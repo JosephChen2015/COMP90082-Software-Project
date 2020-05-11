@@ -17,7 +17,7 @@ class FaceUtils:
     face_encodings = []
 
     def __init__(self, img_path="./Web/App/knowns/"):
-    # def __init__(self, img_path="./"):
+    # def __init__(self, img_path="./knowns/"):
         self.img_path = img_path
         self.load_images()
         self.encoding_faces()
@@ -60,6 +60,7 @@ class FaceUtils:
         unknown_image_base64_string = imgUtils.bufferToBase64String(unknown_image_buffer)
 
         message = {"image": unknown_image_base64_string, "classified": classified, "results": name_confidence_score}
+        print(message['image'])
 
         return message, name_confidence_score, unknown_image_buffer
 
@@ -70,6 +71,4 @@ class FaceUtils:
 #     if not u.startswith(".") and allowed_file(u):
 #         img = open(unknown_path + u, 'rb')
 #         res, classified, name_distance = face_util.face_match_img(img)
-#         cv2.imshow("Output", res)
-#         cv2.waitKey(0)
 #         print(name_distance)

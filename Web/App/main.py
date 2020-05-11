@@ -11,6 +11,7 @@ import json
 import requests
 import imgUtils
 from faceUtils import FaceUtils
+import traceback
 
 firebase = firebase.Firebase(config.firebaseConfig)
 storage = firebase.storage()
@@ -170,6 +171,7 @@ def recogApi():
     except:
         return jsonify(errorClassificationFailed)
 
+
 @app.route('/recogUploadApi', methods=['GET', 'POST'])
 def recogUploadApi():
     """
@@ -206,7 +208,7 @@ def recogUploadApi():
 
     try:
         # rgbImg = imgUtils.base64StringToRgb(imgBase64)
-        message, nameConfidScore, imgBuffer = faceUtils.face_match_img("test.jpg")
+        message, nameConfidScore, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
 
         if message["classified"] is False:
             return jsonify(message)
@@ -237,8 +239,15 @@ def recogUploadApi():
             database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
 
             return jsonify(message)
-    except:
+    except Exception as e:
+        print('str(Exception):\t', str(Exception))
+        print('str(e):\t\t', str(e))
+        print('repr(e):\t', repr(e))
+        print('traceback.print_exc():')
+        traceback.print_exc()
+        print('traceback.format_exc():\n%s' % traceback.format_exc())
         return jsonify(errorClassificationFailed)
+
 
 # Main function
 if __name__ == '__main__':
