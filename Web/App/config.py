@@ -3,10 +3,8 @@
 config.py file is used for web app configuration
 """
 
-"""
-SECRET_KEY = 'hard to guess'
+# SECRET_KEY = 'hard to guess'
 DEBUG = True
-"""
 
 firebaseConfig = {
     "apiKey": "AIzaSyBZEUJ0unUXbOOFN9MaLcHMyGfL14hUAZk",
