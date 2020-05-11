@@ -34,7 +34,7 @@ class FaceUtils:
         unknown_image = face_recognition.load_image_file(file_stream)
         unknown_face_encodings = face_recognition.face_encodings(unknown_image)
         face_locations = face_recognition.face_locations(unknown_image)
-        name_distance = []
+        name_confidence_score = []
         classified = False
         for i in range(len(unknown_face_encodings)):
             unknown_encoding = unknown_face_encodings[i]
@@ -47,19 +47,20 @@ class FaceUtils:
                 if results[j]:
                     classified = True
                     name = self.names[j]
-                    distance = distances[j]
-                    name_distance_json = {"name": name, "distance": distance}
-                    name_distance.append(name_distance_json)
+                    confidence_score = 1 - distances[j]
+                    name_confidence_score_json = {"name": name, "confidence score": confidence_score}
+                    name_confidence_score.append(name_confidence_score_json)
                     cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0),
                                 2)
         # unknown_image_rgb = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
         unknown_image_buffer = imgUtils.rgbToBuffer(unknown_image)
         unknown_image_base64_string = imgUtils.bufferToBase64String(unknown_image_buffer)
 
-        message = {"image": unknown_image_base64_string, "classified": classified, "results": name_distance}
+        message = {"image": unknown_image_base64_string, "classified": classified, "results": name_confidence_score}
 
-        return message, name_distance, unknown_image_buffer
+        return message, name_confidence_score, unknown_image_buffer
 
+# Simple test
 # face_util = FaceUtils()
 # unknown_path = "./unknowns/"
 # for u in os.listdir(unknown_path):
