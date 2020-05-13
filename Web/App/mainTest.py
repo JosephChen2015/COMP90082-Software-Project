@@ -178,9 +178,7 @@ def recogUploadApi():
     Function is the same with recogApi if the user is not logged in.
     recogUploadApi accepts JSON as input. Input must contain:
         imageBase64: Base64 encoded image
-        imageName: The name of the image to be uploaded
         uid: The user ID
-        email: The user's email that is used to login
         date: The upload date
     The API returns a JSON in the format of:
         {
@@ -198,9 +196,7 @@ def recogUploadApi():
     # try:
     #     requestJson = request.json
     #     imgBase64 = requestJson["imageBase64"]
-    #     imgName = requestJson["imageName"]
     #     userId = requestJson["uid"]
-    #     email = requestJson["email"]
     #     date = requestJson["date"]
     # except:
     #     return jsonify(errorInvalidJson)
@@ -212,10 +208,10 @@ def recogUploadApi():
     #     if message["classified"] is False:
     #         return jsonify(message)
     #     else:
-    #         if email:
+    #         if userId:
     #             # Upload the classification result to the database
     #             entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-    #                 "imageName": imgName, "date": date, "result": nameConfidScore, "userId": userId})["name"]
+    #                 "date": date, "result": nameConfidScore, "userId": userId})["name"]
     #
     #             # Upload the labelled image to the storage
     #             img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
@@ -235,7 +231,7 @@ def recogUploadApi():
 def helloWorld():
     # Upload the classification result to Real-time Database
     entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
-        "imageName": "image name", "date": "date", "result": "null", "userId": "user Id"})["name"]
+        "date": "date", "result": "null", "userId": "user Id"})["name"]
 
     # Upload the labelled image to Storage
     img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')

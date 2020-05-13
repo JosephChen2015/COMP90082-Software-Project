@@ -29,7 +29,6 @@ app.config.from_object(config)
 errorInvalidJson = {"Error": "Failed to parse json, invalid format"}
 errorClassificationFailed = {"Error": "Failed to process image, try another image"}
 
-
 # # Index page
 # @app.route('/', methods=['GET', 'POST'])
 # def index():
@@ -179,9 +178,7 @@ def recogUploadApi():
     Function is the same with recogApi if the user is not logged in.
     recogUploadApi accepts JSON as input. Input must contain:
         imageBase64: Base64 encoded image
-        imageName: The name of the image to be uploaded
         uid: The user ID
-        email: The user's email that is used to login
         date: The upload date
     The API returns a JSON in the format of:
         {
@@ -199,24 +196,23 @@ def recogUploadApi():
     # try:
     #     requestJson = request.json
     #     imgBase64 = requestJson["imageBase64"]
-    #     imgName = requestJson["imageName"]
     #     userId = requestJson["uid"]
-    #     email = requestJson["email"]
     #     date = requestJson["date"]
     # except:
     #     return jsonify(errorInvalidJson)
 
     try:
         # rgbImg = imgUtils.base64StringToRgb(imgBase64)
+        # message, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
         message, nameConfidScore, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
 
         if message["classified"] is False:
             return jsonify(message)
         else:
-            # if email:
+            # if userId:
             #     # Upload the classification result to Real-time Database
             #     entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-            #         "imageName": imgName, "date": date, "result": nameConfidScore, "userId": userId})["name"]
+            #         "date": date, "result": nameConfidScore, "userId": userId})["name"]
             #
             #     # Upload the labelled image to Storage
             #     img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
@@ -228,7 +224,7 @@ def recogUploadApi():
 
             # Upload the classification result to Real-time Database
             entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
-                "imageName": "image name", "date": "date", "result": nameConfidScore, "userId": "user Id"})["name"]
+                "date": "date", "result": nameConfidScore, "userId": "user Id"})["name"]
 
             # Upload the labelled image to Storage
             img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
@@ -247,7 +243,6 @@ def recogUploadApi():
         traceback.print_exc()
         print('traceback.format_exc():\n%s' % traceback.format_exc())
         return jsonify(errorClassificationFailed)
-
 
 # Main function
 if __name__ == '__main__':
