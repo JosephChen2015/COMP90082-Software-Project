@@ -7,7 +7,19 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         user:null,
-        recognitions:[]
+        recognitions:[
+            {
+                imageUrl:'https://pic4.zhimg.com/80/v2-3186cceadf7ac4bf46152160cb787704_720w.jpg',
+                id:'dasdwadasdasdaw',
+                date:'2020-05-07'
+            },
+            {
+                imageUrl:'https://pic1.zhimg.com/80/4a1664c72efc37ee89cbefa76dc86cbb_720w.jpg',
+                id:'dasdwadas312312w',
+                date:'2020-05-08'
+            }
+        ],
+        result:{}
     },
     mutations: {
         setUser(state,payload){
@@ -19,6 +31,9 @@ export default new Vuex.Store({
         recognitionHis(state,payload){
             state.recognitions = payload
         },
+        setResult(state,payload){
+            state.result = payload
+        }
     },
 
     actions: {
@@ -55,6 +70,7 @@ export default new Vuex.Store({
                 (data) => {
                     const newUser = {
                         id:data.user.uid,
+
                     }
                     commit('setUser',newUser)
 
@@ -68,15 +84,18 @@ export default new Vuex.Store({
         recognitionReq({commit, getters},payload){
             const recognition = {
                 result:'',
-                description:'',
-                userId:getters.user.id,
+                userId:'',
                 date:payload.date.toISOString()
             }
             let imageUrl
             let key
             let extension
-            console.log(getters.user.id)
-            firebase.database().ref('users/'+getters.user.id+'/recognitions').push(recognition).then((data)=> {
+            if(getters.user===null){
+                recognition.userId = 'undefined'
+            }else{
+                recognition.userId = getters.user.id
+            }
+            firebase.database().ref('users/'+recognition.userId+'/recognitions').push(recognition).then((data)=> {
                 key = data.key
                 // commit('recognitionReq',{
                 //     ...recognition,
@@ -96,7 +115,7 @@ export default new Vuex.Store({
             }).then((URL)=>{
                 imageUrl = URL
                 console.log(imageUrl)
-                return firebase.database().ref('users/' + getters.user.id + '/recognitions').child(key).update({imageUrl: imageUrl})
+                return firebase.database().ref('users/' + recognition.userId + '/recognitions').child(key).update({imageUrl: imageUrl})
             }).then(()=>{
                 commit('recognitionReq',{
                     ...recognition,
@@ -134,11 +153,26 @@ export default new Vuex.Store({
         logout({commit}){
             firebase.auth().signOut()
             commit('setUser',null)
+        },
+        result({commit},payload){
+            commit('setResult',payload)
         }
     },
     getters:{
         user(state){
             return state.user
+        },
+        recognitions(state){
+            return state.recognitions.sort((recognitionA,recognitionB)=>{
+                return recognitionA.date < recognitionB.date
+            })
+        },
+        recognition(state){
+            return (recognitionId)=>{
+                return state.recognitions.find((recognition)=>{
+                    return recognition.id === recognitionId
+                })
+            }
         }
     },
     modules: {

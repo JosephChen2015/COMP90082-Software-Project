@@ -19,10 +19,12 @@
             Sign Up
           </router-link>
         </v-btn>
-        <v-btn v-if="menuItems.history.history" class="blue lighten-4">
-          <v-icon left class="mdi mdi-login"></v-icon>
-          History
-        </v-btn>
+        <router-link tag="v-card" to="/History">
+          <v-btn v-if="menuItems.history.history" class="blue lighten-4">
+            <v-icon left class="mdi mdi-login"></v-icon>
+            History
+          </v-btn>
+        </router-link>
         <v-btn v-if="menuItems.logout.logout" @click="onLogout" class="blue lighten-4">
             <v-icon left class="mdi mdi-logout"></v-icon>
             Log Out

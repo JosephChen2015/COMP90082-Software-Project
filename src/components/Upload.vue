@@ -39,7 +39,10 @@
         data(){
             return {
                 imageUrl:'',
-                image:null
+                image:null,
+                imageBase64:'',
+                uid:'',
+                result:{}
             }
         },
         computed:{
@@ -55,17 +58,32 @@
                 if(!this.image){
                     return
                 }
+                if(this.$store.getters.user===null){
+                    this.uid = 'undefined'
+                }else{
+                    this.uid = this.$store.getters.user.id
+                }
                 const imageData = {
                     image:this.image,
-                    date:new Date()
+                    date:new Date(),
                 }
                 this.$store.dispatch('recognitionReq',imageData)
+                this.$router.push('/Result')
+                this.imageBase64 = this.imageUrl.slice(this.imageUrl.lastIndexOf(',')+1)
+                console.log(this.imageBase64)
+                this.axios.post('/recog/recogUploadApi',{uid:this.uid,imageBase64:this.imageBase64,date:new Date()}).then((res)=> {
+                    console.log(res.data)
+                    this.result=res.data
+                    this.$sotre.dispatch('result', this.result)
+                    this.$router.push('/Result')
+                })
             },
             onPickFile(){
                 this.$refs.fileInput.click()
             },
             onFilePicked(event){
                 const files = event.target.files
+
                 let filename = files[0].name
                 if(filename.lastIndexOf('.')<=0){
                     return alert('Please choose a valid file!')
@@ -73,9 +91,12 @@
                 const fileReader = new FileReader()
                 fileReader.addEventListener('load',()=>{
                     this.imageUrl = fileReader.result
+
                 })
                 fileReader.readAsDataURL(files[0])
                 this.image = files[0]
+
+                console.log(this.uid)
             }
         }
     }
