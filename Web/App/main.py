@@ -29,6 +29,7 @@ app.config.from_object(config)
 errorInvalidJson = {"Error": "Failed to parse json, invalid format"}
 errorClassificationFailed = {"Error": "Failed to process image, try another image"}
 
+
 # # Index page
 # @app.route('/', methods=['GET', 'POST'])
 # def index():
@@ -165,9 +166,15 @@ def recogApi():
 
     try:
         rgbImg = imgUtils.base64StringToRgb(imgBase64)
-        message = faceUtils.face_match_img(rgbImg)
+        message, score, buffer = faceUtils.face_match_img(rgbImg)
         return jsonify(message)
-    except:
+    except Exception as e:
+        print('str(Exception):\t', str(Exception))
+        print('str(e):\t\t', str(e))
+        print('repr(e):\t', repr(e))
+        print('traceback.print_exc():')
+        traceback.print_exc()
+        print('traceback.format_exc():\n%s' % traceback.format_exc())
         return jsonify(errorClassificationFailed)
 
 @app.route('/recogUploadApi', methods=['GET', 'POST'])
@@ -242,6 +249,7 @@ def recogUploadApi():
         traceback.print_exc()
         print('traceback.format_exc():\n%s' % traceback.format_exc())
         return jsonify(errorClassificationFailed)
+
 
 # Main function
 if __name__ == '__main__':
