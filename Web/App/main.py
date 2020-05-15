@@ -170,7 +170,6 @@ def recogApi():
     except:
         return jsonify(errorClassificationFailed)
 
-
 @app.route('/recogUploadApi', methods=['GET', 'POST'])
 def recogUploadApi():
     """
@@ -246,4 +245,4 @@ def recogUploadApi():
 
 # Main function
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host="0.0.0.0")

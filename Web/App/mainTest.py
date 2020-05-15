@@ -229,20 +229,20 @@ def recogUploadApi():
 # Test function of uploading results to Real-time Database and Storage
 @app.route('/', methods=['GET', 'POST'])
 def helloWorld():
-    # Upload the classification result to Real-time Database
-    entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
-        "date": "date", "result": "null", "userId": "user Id"})["name"]
-
-    # Upload the labelled image to Storage
-    img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
-    img.put("test.jpg")
-
-    # Upload the labelled image url to Real-time Database
-    imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
-    database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+    # # Upload the classification result to Real-time Database
+    # entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
+    #     "date": "date", "result": "null", "userId": "user Id"})["name"]
+    #
+    # # Upload the labelled image to Storage
+    # img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
+    # img.put("test.jpg")
+    #
+    # # Upload the labelled image url to Real-time Database
+    # imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
+    # database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
 
     return 'Hello, World!'
 
 # Main function
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True, host="0.0.0.0")
