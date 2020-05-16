@@ -12,6 +12,6 @@ def rgbToBuffer(rgb_array):
 #     return base64.b64encode(buffer).decode("utf-8")
 
 def base64StringToRgb(base64_string):
-    img_data = base64.b64decode(base64_string)
+    img_data = base64.b64decode(str(base64_string))
     image = BytesIO(img_data)
     return image

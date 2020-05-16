@@ -158,12 +158,11 @@ errorClassificationFailed = {"Error": "Failed to process image, try another imag
 #     try:
 #         requestJson = request.json
 #         imgBase64 = requestJson["imageBase64"]
-#         imgBase64String = (str(imgBase64))[23:]
 #     except:
 #         return jsonify(errorInvalidJson)
 #
 #     try:
-#         rgbImg = imgUtils.base64StringToRgb(imgBase64String)
+#         rgbImg = imgUtils.base64StringToRgb(imgBase64)
 #         message, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
 #         return jsonify(message)
 #     except:
@@ -193,14 +192,13 @@ def recogUploadApi():
     # try:
     #     requestJson = request.json
     #     imgBase64 = requestJson["imageBase64"]
-    #     imgBase64String = (str(imgBase64))[23:]
     #     userId = requestJson["uid"]
     #     date = requestJson["date"]
     # except:
     #     return jsonify(errorInvalidJson)
     #
     # try:
-    #     rgbImg = imgUtils.base64StringToRgb(imgBase64String)
+    #     rgbImg = imgUtils.base64StringToRgb(imgBase64)
     #     classified, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
     #
     # # Upload the classification result to the database
