@@ -4,9 +4,8 @@ Main flask application with all the routes
 """
 
 import firebase as firebase
-from flask import Flask, render_template, request, redirect, flash, url_for, session, jsonify
+from flask import Flask, request, redirect, flash, url_for, session, jsonify
 import config
-from datetime import datetime
 import json
 import requests
 import imgUtils
@@ -28,7 +27,6 @@ app.config.from_object(config)
 # Error messages to be sent if the user passes in invalid json or error on image processing possibly due to bad data
 errorInvalidJson = {"Error": "Failed to parse json, invalid format"}
 errorClassificationFailed = {"Error": "Failed to process image, try another image"}
-
 
 # # Index page
 # @app.route('/', methods=['GET', 'POST'])
@@ -139,49 +137,49 @@ errorClassificationFailed = {"Error": "Failed to process image, try another imag
 #         return redirect(url_for('login'))
 #     return ASK_LOGIN_TEXT
 
-@app.route('/recogApi', methods=['GET', 'POST'])
-def recogApi():
-    """
-    REST API which recognises all faces in an image.
-    recogApi accepts JSON as input. Input must contain:
-        imageBase64: Base64 encoded image
-    The API returns a JSON in the format of:
-        {
-         image: "Base64 encoded image with bounding boxes labelled by their names"
-         classified: "Boolean value of whether face(s) is classified in the image"
-         results: "List of {
-                            "{
-                              name: "the name "
-                              confidence score: "the confidence score"
-                             }"
-                           }"(present only if it is classified)
-        }
-    """
-
-    try:
-        requestJson = request.json
-        imgBase64 = requestJson["imageBase64"]
-    except:
-        return jsonify(errorInvalidJson)
-
-    try:
-        rgbImg = imgUtils.base64StringToRgb(imgBase64)
-        message, score, buffer = faceUtils.face_match_img(rgbImg)
-        return jsonify(message)
-    except Exception as e:
-        print('str(Exception):\t', str(Exception))
-        print('str(e):\t\t', str(e))
-        print('repr(e):\t', repr(e))
-        print('traceback.print_exc():')
-        traceback.print_exc()
-        print('traceback.format_exc():\n%s' % traceback.format_exc())
-        return jsonify(errorClassificationFailed)
+# @app.route('/recogApi', methods=['GET', 'POST'])
+# def recogApi():
+#     """
+#     REST API which recognises all faces in an image.
+#     recogApi accepts JSON as input. Input must contain:
+#         imageBase64: Base64 encoded image
+#     The API returns a JSON in the format of:
+#         {
+#          image: "Base64 encoded image with bounding boxes labelled by their names"
+#          classified: "Boolean value of whether face(s) is classified in the image"
+#          results: "List of {
+#                             "{
+#                               name: "the name "
+#                               confidence score: "the confidence score"
+#                              }"
+#                            }"(present only if it is classified)
+#         }
+#     """
+#
+#     try:
+#         requestJson = request.json
+#         imgBase64 = requestJson["imageBase64"]
+#         imgBase64String = (str(imgBase64))[23:]
+#     except:
+#         return jsonify(errorInvalidJson)
+#
+#     try:
+#         rgbImg = imgUtils.base64StringToRgb(imgBase64String)
+#         message, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
+#         return jsonify(message)
+#     except Exception as e:
+#         print('str(Exception):\t', str(Exception))
+#         print('str(e):\t\t', str(e))
+#         print('repr(e):\t', repr(e))
+#         print('traceback.print_exc():')
+#         traceback.print_exc()
+#         print('traceback.format_exc():\n%s' % traceback.format_exc())
+#         return jsonify(errorClassificationFailed)
 
 @app.route('/recogUploadApi', methods=['GET', 'POST'])
 def recogUploadApi():
     """
-    REST API which recognises all faces in an image and uploads the results to Real-time Database and Storage if the user is logged in.
-    Function is the same with recogApi if the user is not logged in.
+    REST API which recognises all faces in an image and uploads the results to Real-time Database and Storage.
     recogUploadApi accepts JSON as input. Input must contain:
         imageBase64: Base64 encoded image
         uid: The user ID
@@ -199,48 +197,49 @@ def recogUploadApi():
         }
     """
 
-    # try:
-    #     requestJson = request.json
-    #     imgBase64 = requestJson["imageBase64"]
-    #     userId = requestJson["uid"]
-    #     date = requestJson["date"]
-    # except:
-    #     return jsonify(errorInvalidJson)
+    try:
+        requestJson = request.json
+        imgBase64 = requestJson["imageBase64"]
+        imgBase64String = (str(imgBase64))[23:]
+        userId = requestJson["uid"]
+        date = requestJson["date"]
+    except:
+        return jsonify(errorInvalidJson)
 
     try:
-        # rgbImg = imgUtils.base64StringToRgb(imgBase64)
-        # message, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
-        message, nameConfidScore, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
+        rgbImg = imgUtils.base64StringToRgb(imgBase64String)
+        classified, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
+        # classified, nameConfidScore, imgBuffer = faceUtils.face_match_img("./unknowns/test.jpg")
 
-        if message["classified"] is False:
-            return jsonify(message)
-        else:
-            # if userId:
-            #     # Upload the classification result to Real-time Database
-            #     entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-            #         "date": date, "result": nameConfidScore, "userId": userId})["name"]
-            #
-            #     # Upload the labelled image to Storage
-            #     img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
-            #     img.put(imgBuffer)
-            #
-            #     # Upload the labelled image url to Real-time Database
-            #     imgUrl = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').get_url(None)
-            #     database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+        # Upload the classification result to Real-time Database
+        entryName = database.child('users/' + userId + '/' + 'recognitions').push({
+            "date": date, "result": nameConfidScore, "userId": userId})["name"]
 
-            # Upload the classification result to Real-time Database
-            entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
-                "date": "date", "result": nameConfidScore, "userId": "user Id"})["name"]
+        # Upload the labelled image to Storage
+        img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
+        img.put(imgBuffer)
 
-            # Upload the labelled image to Storage
-            img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
-            img.put(imgBuffer)
+        # Upload the labelled image url to Real-time Database
+        imgUrl = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').get_url(None)
+        database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
 
-            # Upload the labelled image url to Real-time Database
-            imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
-            database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+        message = {"imageUrl": imgUrl, "classified": classified, "results": nameConfidScore}
 
-            return jsonify(message)
+        # # Upload the classification result to Real-time Database
+        # entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
+        #     "date": "date", "result": nameConfidScore, "userId": "user Id"})["name"]
+        #
+        # # Upload the labelled image to Storage
+        # img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
+        # img.put(imgBuffer)
+        #
+        # # Upload the labelled image url to Real-time Database
+        # imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
+        # database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+        #
+        # message = {"imageUrl": imgUrl, "classified": classified, "results": nameConfidScore}
+
+        return jsonify(message)
     except Exception as e:
         print('str(Exception):\t', str(Exception))
         print('str(e):\t\t', str(e))
@@ -249,7 +248,6 @@ def recogUploadApi():
         traceback.print_exc()
         print('traceback.format_exc():\n%s' % traceback.format_exc())
         return jsonify(errorClassificationFailed)
-
 
 # Main function
 if __name__ == '__main__':

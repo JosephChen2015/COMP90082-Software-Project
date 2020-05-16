@@ -57,12 +57,11 @@ class FaceUtils:
                                 2)
         # unknown_image_rgb = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
         unknown_image_buffer = imgUtils.rgbToBuffer(unknown_image)
-        unknown_image_base64_string = imgUtils.bufferToBase64String(unknown_image_buffer)
+        # unknown_image_base64_string = imgUtils.bufferToBase64String(unknown_image_buffer)
 
-        message = {"image": unknown_image_base64_string, "classified": classified, "results": name_confidence_score}
-        print(message['image'])
+        # message = {"image": "data:image/jpeg;base64," + unknown_image_base64_string, "classified": classified, "results": name_confidence_score}
 
-        return message, name_confidence_score, unknown_image_buffer
+        return classified, name_confidence_score, unknown_image_buffer
 
 # Simple test
 # face_util = FaceUtils()
