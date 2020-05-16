@@ -45,16 +45,17 @@ class FaceUtils:
             top, right, bottom, left = face_location
             cv2.rectangle(unknown_image, (left, top), (right, bottom), (0, 255, 0), 2)
             results = face_recognition.compare_faces(self.face_encodings, unknown_encoding)
-            distances = face_recognition.face_distance(self.face_encodings, unknown_encoding)
-            for j in range(len(results)):
-                if results[j]:
-                    classified = True
-                    name = self.names[j]
-                    confidence_score = 1 - distances[j]
-                    name_confidence_score_json = {"name": name, "confidence score": confidence_score}
-                    name_confidence_score.append(name_confidence_score_json)
-                    cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0),
-                                2)
+            scores = [1 - d for d in face_recognition.face_distance(self.face_encodings, unknown_encoding)]
+            result_index = scores.index(max(scores))
+            if results[result_index]:
+                classified = True
+                name = self.names[result_index]
+                confidence_score = scores[result_index]
+                name_confidence_score_json = {"name": name, "confidence score": confidence_score}
+                name_confidence_score.append(name_confidence_score_json)
+                cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0),
+                            2)
+
         # unknown_image_rgb = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
         unknown_image_buffer = imgUtils.rgbToBuffer(unknown_image)
         # unknown_image_base64_string = imgUtils.bufferToBase64String(unknown_image_buffer)
