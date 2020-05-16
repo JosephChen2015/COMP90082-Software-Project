@@ -1,3 +1,7 @@
+face_recognition
+face_recognition_models
+dlib>=19.3.0
+scipy>=0.17.0
 asgiref==3.2.7
 certifi==2019.11.28
 cffi==1.14.0
@@ -45,3 +49,8 @@ sseclient==0.0.26
 urllib3==1.25.8
 Werkzeug==1.0.0
 yarg==0.1.9
+flask_restful
+gunicorn
+gevent
+opencv-python
+opencv-contrib-python
