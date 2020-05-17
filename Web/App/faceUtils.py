@@ -5,11 +5,9 @@ import imgUtils
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 class FaceUtils:
     names = []
@@ -53,14 +51,9 @@ class FaceUtils:
                 confidence_score = scores[result_index]
                 name_confidence_score_json = {"name": name, "confidence score": confidence_score}
                 name_confidence_score.append(name_confidence_score_json)
-                cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0),
-                            2)
+                cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-        # unknown_image_rgb = cv2.cvtColor(unknown_image, cv2.COLOR_BGR2RGB)
         unknown_image_buffer = imgUtils.rgbToBuffer(unknown_image)
-        # unknown_image_base64_string = imgUtils.bufferToBase64String(unknown_image_buffer)
-
-        # message = {"image": "data:image/jpeg;base64," + unknown_image_base64_string, "classified": classified, "results": name_confidence_score}
 
         return classified, name_confidence_score, unknown_image_buffer
 
@@ -70,5 +63,5 @@ class FaceUtils:
 # for u in os.listdir(unknown_path):
 #     if not u.startswith(".") and allowed_file(u):
 #         img = open(unknown_path + u, 'rb')
-#         res, classified, name_distance = face_util.face_match_img(img)
-#         print(name_distance)
+#         classified, name_confidence_score, unknown_image_buffer = face_util.face_match_img(img)
+#         print(name_confidence_score)
