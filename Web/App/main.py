@@ -54,25 +54,23 @@ def recogUploadApi():
     try:
         rgbImg = imgUtils.base64StringToRgb(imgBase64)
         classified, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
-        # classified, nameConfidScore, imgBuffer = faceUtils.face_match_img("./unknowns/test.jpg")
+        # classified, nameConfidScore, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
 
         # Upload the classification result to Real-time Database
         entryName = database.child('users/' + userId + '/' + 'recognitions').push({
             "date": date, "result": nameConfidScore, "userId": userId})["name"]
 
         # Upload the labelled image to Storage
-        img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
-        img.put(imgBuffer)
+        storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').put(imgBuffer)
 
         # Upload the labelled image url to Real-time Database
-        imgUrl = img.get_url(None)
+        imgUrl = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').get_url(None)
         database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
 
         # Only upload the result of each image to a separate directory
-        database.child('recognitions/' + entryName).push({"result": nameConfidScore})
+        database.child('recognitions').push({"result": nameConfidScore, "imageUrl": imgUrl})
 
         message = {"imageUrl": imgUrl, "classified": classified, "results": nameConfidScore}
-
         return jsonify(message)
     except Exception as e:
         print('str(Exception):\t', str(Exception))

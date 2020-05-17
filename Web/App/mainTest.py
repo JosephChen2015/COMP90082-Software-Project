@@ -52,25 +52,24 @@ def recogUploadApi():
     # try:
     #     rgbImg = imgUtils.base64StringToRgb(imgBase64)
     #     classified, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
+    #     # classified, nameConfidScore, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
     #
-    # # Upload the classification result to the database
-    # entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-    #     "date": date, "result": nameConfidScore, "userId": userId})["name"]
+    #     # Upload the classification result to Real-time Database
+    #     entryName = database.child('users/' + userId + '/' + 'recognitions').push({
+    #         "date": date, "result": nameConfidScore, "userId": userId})["name"]
     #
-    # # Upload the labelled image to the storage
-    # img = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg')
-    # img.put(imgBuffer)
+    #     # Upload the labelled image to Storage
+    #     storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').put(imgBuffer)
     #
-    # # Upload the labelled image url to the database
-    # imgUrl = img.get_url(None)
-    # database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+    #     # Upload the labelled image url to Real-time Database
+    #     imgUrl = storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').get_url(None)
+    #     database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
     #
-    # # Only upload the result of each image to a separate directory
-    # database.child('recognitions/' + entryName).push({"result": nameConfidScore})
+    #     # Only upload the result of each image to a separate directory
+    #     database.child('recognitions').push({"result": nameConfidScore, "imageUrl": imgUrl})
     #
-    # message = {"imageUrl": imgUrl, "classified": classified, "results": nameConfidScore}
-    #
-    # return jsonify(message)
+    #     message = {"imageUrl": imgUrl, "classified": classified, "results": nameConfidScore}
+    #     return jsonify(message)
     # except:
     #     return jsonify(errorClassificationFailed)
 
@@ -78,19 +77,21 @@ def recogUploadApi():
 @app.route('/', methods=['GET', 'POST'])
 def helloWorld():
     # Upload the classification result to Real-time Database
-    entryName = database.child('users/' + 'userId' + '/' + 'recognitions').push({
-        "date": "date", "result": "null", "userId": "user Id"})["name"]
+    entryName = database.child('users/' + 'jingyin' + '/' + 'recognitions').push({
+        "date": "17/05/2020", "result": "null", "userId": "jingyin"})["name"]
 
     # Upload the labelled image to Storage
-    img = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg')
-    img.put("test.jpg")
+    storage.child('imageLabelUploads/' + 'jingyin' + '/' + entryName + '/' + 'label.jpg').put("test.jpeg")
 
     # Upload the labelled image url to Real-time Database
-    imgUrl = storage.child('imageLabelUploads/' + 'userId' + '/' + entryName + '/' + 'label.jpg').get_url(None)
-    database.child('users/' + 'userId' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+    imgUrl = storage.child('imageLabelUploads/' + 'jingyin' + '/' + entryName + '/' + 'label.jpg').get_url(None)
+    database.child('users/' + 'jingyin' + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
+
+    # Only upload the result of each image to a separate directory
+    database.child('recognitions').push({"result": "null", "imageUrl": imgUrl})
 
     return 'Hello, World!'
 
 # Main function
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True)
