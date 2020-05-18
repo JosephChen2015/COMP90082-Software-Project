@@ -4,11 +4,11 @@ Main flask application with all the routes
 """
 
 import firebase as firebase
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import config
 import imgUtils
 from faceUtils import FaceUtils
-import traceback
+import traceback, logging
 
 firebase = firebase.Firebase(config.firebaseConfig)
 storage = firebase.storage()
@@ -84,3 +84,8 @@ def recogUploadApi():
 # Main function
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
