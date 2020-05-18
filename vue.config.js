@@ -1,3 +1,5 @@
+
+
 module.exports = {
   publicPath:'/dist',
   "transpileDependencies": [
@@ -17,5 +19,6 @@ module.exports = {
         }
       },
     }
-  }
+  },
+
 }

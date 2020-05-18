@@ -68,13 +68,11 @@
                     date:new Date(),
                 }
                 this.$store.dispatch('recognitionReq',imageData)
-                this.$router.push('/Result')
                 this.imageBase64 = this.imageUrl.slice(this.imageUrl.lastIndexOf(',')+1)
-                console.log(this.imageBase64)
                 this.axios.post('/recog/recogUploadApi',{uid:this.uid,imageBase64:this.imageBase64,date:new Date()}).then((res)=> {
-                    console.log(res.data)
                     this.result=res.data
-                    this.$sotre.dispatch('result', this.result)
+                    console.log(this.result)
+                    this.$store.dispatch('result', this.result)
                     this.$router.push('/Result')
                 })
             },

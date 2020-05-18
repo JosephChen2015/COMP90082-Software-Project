@@ -7,15 +7,13 @@
                         <h5 class="primary--text">Recognition</h5>
                     </v-card-title>
                     <v-img
-                            src="https://pic4.zhimg.com/80/v2-3186cceadf7ac4bf46152160cb787704_720w.jpg"
-                            height="400px"
+                            :src="result.imageUrl"
                             style="border-radius: 5px"
                     >
                     </v-img>
                     <v-card-text>
-                        <div>Date</div>
-                        <div>Result</div>
-                        <div>Description</div>
+                        <div>Result:{{result.results[0].name}}</div>
+                        <div>Description:<a :href="wiki" >Find more details on Wiki</a></div>
                     </v-card-text>
                     <v-card-actions>
 
@@ -29,7 +27,16 @@
 <script>
     export default {
         name: "Result",
-
+        computed:{
+            result(){
+                console.log(this.$store.getters.result)
+                return this.$store.getters.result
+            },
+            wiki(){
+                const url = 'https://en.wikipedia.org/wiki/' + this.$store.getters.result.results[0].name
+                return url
+            }
+        },
     }
 </script>
 

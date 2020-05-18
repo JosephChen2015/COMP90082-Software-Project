@@ -97,10 +97,6 @@ export default new Vuex.Store({
             }
             firebase.database().ref('users/'+recognition.userId+'/recognitions').push(recognition).then((data)=> {
                 key = data.key
-                // commit('recognitionReq',{
-                //     ...recognition,
-                //     id:key
-                // })
                 return key
             }).then(key=> {
                 const filename = payload.image.name
@@ -110,8 +106,6 @@ export default new Vuex.Store({
                 console.log(key)
                 console.log(fileData)
                 return firebase.storage().ref('recognitions/' + key + '.' + extension).getDownloadURL()
-                // imageUrl = fileData.metadata.ref.location.bucket +'/'+ fileData.metadata.ref.location.path
-                // return firebase.database().ref('users/' + getters.user.id + '/recognitions').child(key).update({imageUrl: imageUrl})
             }).then((URL)=>{
                 imageUrl = URL
                 console.log(imageUrl)
@@ -173,6 +167,9 @@ export default new Vuex.Store({
                     return recognition.id === recognitionId
                 })
             }
+        },
+        result(state){
+            return state.result
         }
     },
     modules: {

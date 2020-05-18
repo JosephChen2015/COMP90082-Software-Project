@@ -42,7 +42,7 @@
         computed:{
             recognitions(){
                 return this.$store.getters.recognitions
-            }
+            },
         },
         methods:{
             onLoadRecognition(id){
