@@ -42,11 +42,11 @@ According to different systems, in `frontend/nginx.conf` file, the `proxy_pass` 
 * For macOS:
 
 ```shell
-proxy_pass http://docker.for.mac.host.internal:5000
+proxy_pass http://docker.for.mac.host.internal:5000;
 ```
 
 * For Linux:
 
 ```shell
-proxy_pass http://172.17.0.1:5000
+proxy_pass http://172.17.0.1:5000;
 ```
