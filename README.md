@@ -11,7 +11,7 @@ cd nectar
 
 ## Deploy both front-end and back-end
 
-Enter the following command in the terminal in the ‘deployment’ directory:
+Enter the following command in the terminal in the `deployment` directory:
 
 ```shell
 docker-compose up -d
@@ -19,7 +19,7 @@ docker-compose up -d
 
 ## Deploy the back-end separately
 
-Enter the following command in the terminal in the ‘deployment’ directory:
+Enter the following command in the terminal in the `deployment` directory:
 
 ```shell
 docker build -t backend ./backend
@@ -28,7 +28,7 @@ docker run -p 5000:5000 -d -it --name backend backend
 
 ## Deploy the front-end separately
 
-Enter the following command in the terminal in the ‘deployment’ directory:
+Enter the following command in the terminal in the `deployment` directory:
 
 ```shell
 docker build -t frontend ./frontend
