@@ -15,7 +15,6 @@ class FaceUtils:
     face_encodings = []
 
     def __init__(self, img_path="./Web/App/knowns/"):
-    # def __init__(self, img_path="./knowns/"):
         self.img_path = img_path
         self.load_images()
         self.encoding_faces()
@@ -35,7 +34,7 @@ class FaceUtils:
         unknown_image = face_recognition.load_image_file(file_stream)
         unknown_face_encodings = face_recognition.face_encodings(unknown_image)
         face_locations = face_recognition.face_locations(unknown_image)
-        name_confidence_score = []
+        name_probability = []
         classified = False
         for i in range(len(unknown_face_encodings)):
             unknown_encoding = unknown_face_encodings[i]
@@ -43,19 +42,19 @@ class FaceUtils:
             top, right, bottom, left = face_location
             cv2.rectangle(unknown_image, (left, top), (right, bottom), (0, 255, 0), 2)
             results = face_recognition.compare_faces(self.face_encodings, unknown_encoding)
-            scores = [1 - d for d in face_recognition.face_distance(self.face_encodings, unknown_encoding)]
-            result_index = scores.index(max(scores))
+            probs = [1 - d for d in face_recognition.face_distance(self.face_encodings, unknown_encoding)]
+            result_index = probs.index(max(probs))
             if results[result_index]:
                 classified = True
                 name = self.names[result_index]
-                confidence_score = scores[result_index]
-                name_confidence_score_json = {"name": name, "confidence score": confidence_score}
-                name_confidence_score.append(name_confidence_score_json)
+                prob = probs[result_index]
+                name_confidence_score_json = {"name": name, "probability": prob}
+                name_probability.append(name_confidence_score_json)
                 cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         unknown_image_buffer = imgUtils.rgbToBuffer(unknown_image)
 
-        return classified, name_confidence_score, unknown_image_buffer
+        return classified, name_probability, unknown_image_buffer
 
 # Simple test
 # face_util = FaceUtils()

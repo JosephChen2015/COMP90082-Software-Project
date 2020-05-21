@@ -35,9 +35,9 @@ def recogUploadApi():
          results: "List of {
                             "{
                               name: "the name "
-                              distance: "the confident score"
-                             }"
-                           }"(present only if it is classified)
+                              probability: "the highest probability"
+                             }" (for each detected face only if it is classified)
+                           }"
         }
     """
 
@@ -51,12 +51,12 @@ def recogUploadApi():
     #
     # try:
     #     rgbImg = imgUtils.base64StringToRgb(imgBase64)
-    #     classified, nameConfidScore, imgBuffer = faceUtils.face_match_img(rgbImg)
-    #     # classified, nameConfidScore, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
+    #     classified, nameProb, imgBuffer = faceUtils.face_match_img(rgbImg)
+    #     # classified, nameProb, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
     #
     #     # Upload the classification result to Real-time Database
     #     entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-    #         "date": date, "result": nameConfidScore, "userId": userId})["name"]
+    #         "date": date, "result": nameProb, "userId": userId})["name"]
     #
     #     # Upload the labelled image to Storage
     #     storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').put(imgBuffer)
@@ -66,9 +66,9 @@ def recogUploadApi():
     #     database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
     #
     #     # Only upload the result of each image to a separate directory
-    #     database.child('recognitions').push({"result": nameConfidScore, "imageUrl": imgUrl})
+    #     database.child('recognitions').push({"result": nameProb, "imageUrl": imgUrl})
     #
-    #     message = {"imageUrl": imgUrl, "classified": classified, "results": nameConfidScore}
+    #     message = {"imageUrl": imgUrl, "classified": classified, "results": nameProb}
     #     return jsonify(message)
     # except:
     #     return jsonify(errorClassificationFailed)

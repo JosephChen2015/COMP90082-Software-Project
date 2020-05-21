@@ -3,7 +3,6 @@
 config.py file is used for web app configuration
 """
 
-# SECRET_KEY = 'hard to guess'
 DEBUG = True
 
 firebaseConfig = {
