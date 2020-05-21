@@ -23,7 +23,7 @@ app.config.from_object(config)
 errorInvalidJson = {"Error": "Failed to parse json, invalid format"}
 errorClassificationFailed = {"Error": "Failed to process image, try another image"}
 
-@app.route('/recogUploadApi', methods=['GET', 'POST'])
+@app.route('/recog/recogUploadApi', methods=['GET', 'POST'])
 def recogUploadApi():
     """
     REST API which recognises all faces in an image and uploads the results to Real-time Database and Storage.
