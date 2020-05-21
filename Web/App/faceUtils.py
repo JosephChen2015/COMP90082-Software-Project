@@ -48,8 +48,8 @@ class FaceUtils:
                 classified = True
                 name = self.names[result_index]
                 prob = probs[result_index]
-                name_confidence_score_json = {"name": name, "probability": prob}
-                name_probability.append(name_confidence_score_json)
+                name_prob_json = {"name": name, "probability": prob}
+                name_probability.append(name_prob_json)
                 cv2.putText(unknown_image, name, (left - 10, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         unknown_image_buffer = imgUtils.rgbToBuffer(unknown_image)

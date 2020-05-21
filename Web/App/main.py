@@ -59,7 +59,7 @@ def recogUploadApi():
 
         # Upload the classification result to Real-time Database
         entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-            "date": date, "result": nameProb, "userId": userId})["name"]
+            "date": date, "results": nameProb, "userId": userId})["name"]
 
         # Upload the labelled image to Storage
         storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').put(imgBuffer)
@@ -69,7 +69,7 @@ def recogUploadApi():
         database.child('users/' + userId + '/' + 'recognitions/' + entryName).update({"imageUrl": imgUrl})
 
         # Only upload the result of each image to a separate directory
-        database.child('recognitions').push({"result": nameProb, "imageUrl": imgUrl})
+        database.child('recognitions').push({"results": nameProb, "imageUrl": imgUrl})
 
         message = {"imageUrl": imgUrl, "classified": classified, "results": nameProb}
         return jsonify(message)
