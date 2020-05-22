@@ -12,8 +12,8 @@
                     >
                     </v-img>
                     <v-card-text>
-                        <div>Result:{{result.results[0].name}}</div>
-                        <div>Description:<a :href="wiki" >Find more details on Wiki</a></div>
+                        <div v-for="detail in result.results" :key="detail.name">Result:{{detail.name}}</div>
+                        <div v-for="detail in result.results" :key="detail.name">Description:<a :href="wiki" >Find more details about {{detail.name}} on Wiki</a></div>
                     </v-card-text>
                     <v-card-actions>
 

@@ -70,10 +70,16 @@
                 this.$store.dispatch('recognitionReq',imageData)
                 this.imageBase64 = this.imageUrl.slice(this.imageUrl.lastIndexOf(',')+1)
                 this.axios.post('/recog/recogUploadApi',{uid:this.uid,imageBase64:this.imageBase64,date:new Date()}).then((res)=> {
-                    this.result=res.data
-                    console.log(this.result)
-                    this.$store.dispatch('result', this.result)
-                    this.$router.push('/Result')
+                    if(res.data.classified){
+                        this.result=res.data
+                        console.log(this.result)
+                        this.$store.dispatch('result', this.result)
+                        this.$router.push('/Result')
+                    }else{
+                        alert('Sorry, our system is failed to recognize the person in the uploaded picture.')
+                    }
+                }).catch((error)=>{
+                    alert(error)
                 })
             },
             onPickFile(){

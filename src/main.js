@@ -38,8 +38,10 @@ new Vue({
       if(user){
         this.$store.dispatch('autoLogin',user)
         this.$store.dispatch('recognitionAll')
+        // this.$store.dispatch('results')
       }
     })
+    this.$store.dispatch('results')
     // this.$store.dispatch('recognitionAll')
   }
 }).$mount('#app')

@@ -10,11 +10,16 @@
                         <div class="scroll">
                               <swiper :options="swiperOption" ref="mySwiper">
                                     <!-- slides -->
-                                    <swiper-slide>I'm Slide 1</swiper-slide>
-                                    <swiper-slide>I'm Slide 2</swiper-slide>
-                                    <swiper-slide>I'm Slide 3</swiper-slide>
-                                    <swiper-slide>I'm Slide 4</swiper-slide>
-                                    <swiper-slide>I'm Slide 5</swiper-slide>
+                                    <swiper-slide><v-img :src="results[0].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[1].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[2].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[3].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[4].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
+<!--                                    <swiper-slide>1</swiper-slide>-->
+<!--                                    <swiper-slide>2</swiper-slide>-->
+<!--                                    <swiper-slide>3</swiper-slide>-->
+<!--                                    <swiper-slide>4</swiper-slide>-->
+<!--                                    <swiper-slide>5</swiper-slide>-->
 
                                     <!-- Optional controls -->
                                     <div class="swiper-pagination "  slot="pagination"></div>
@@ -85,7 +90,7 @@
                               //自动播放
                               // autoplay:true,
                               autoplay: {
-                                  delay: 3000,
+                                  delay: 5000,
                                   stopOnLastSlide: false,
                                   disableOnInteraction: true,
                               },
@@ -95,6 +100,7 @@
                               speed:800,
                               //滑动方向
                               direction : 'horizontal',
+                              centeredSlides: true,
                               //小手掌抓取滑动
                               // grabCursor : true,
                               //滑动之后回调函数
@@ -114,18 +120,25 @@
                                     clickable :true
                               }
                         },
-                        swiperSlides: [1, 2, 3, 4, 5]
+                        // swiperSlides: [1, 2, 3, 4, 5]
                   }
             },
             computed: {
                   swiper() {
                         return this.$refs.mySwiper.swiper;
+                  },
+                  results(){
+                        return this.$store.getters.results;
                   }
             },
             mounted () {
                   //可以使用swiper这个对象去使用swiper官网中的那些方法
-                  console.log('this is current swiper instance object', this.swiper);
-                  // this.swiper.slideTo(0, 0, false);
+                  this.$nextTick(() => {
+                        const swiperTop = this.$refs.swiperTop.swiper
+                        const swiperThumbs = this.$refs.swiperThumbs.swiper
+                        swiperTop.controller.control = swiperThumbs
+                        swiperThumbs.controller.control = swiperTop
+                  })
             }
       }
 </script>

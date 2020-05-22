@@ -7,24 +7,18 @@
       <router-link tag="v-card" to="/" style="cursor:pointer"><v-toolbar-title>Celebrities Recognition</v-toolbar-title></router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items style="height: 59px">
-        <v-btn v-if="menuItems.login.login" class="blue lighten-4">
-          <router-link tag="v-card" to="/Login">
+        <v-btn v-if="menuItems.login.login" class="blue lighten-4" @click="onLoadLogin">
             <v-icon left class="mdi mdi-login"></v-icon>
             Login
-          </router-link>
         </v-btn>
-        <v-btn v-if="menuItems.register.register" class="blue lighten-4">
-          <router-link tag="v-card" to="/Register">
+        <v-btn v-if="menuItems.register.register" class="blue lighten-4" @click="onLoadSignUp">
             <v-icon left class="mdi mdi-account-plus"></v-icon>
             Sign Up
-          </router-link>
         </v-btn>
-        <router-link tag="v-card" to="/History">
-          <v-btn v-if="menuItems.history.history" class="blue lighten-4">
-            <v-icon left class="mdi mdi-login"></v-icon>
+          <v-btn v-if="menuItems.history.history" class="blue lighten-4" @click="onLoadHistory">
+            <v-icon left class="mdi mdi-history"></v-icon>
             History
           </v-btn>
-        </router-link>
         <v-btn v-if="menuItems.logout.logout" @click="onLogout" class="blue lighten-4">
             <v-icon left class="mdi mdi-logout"></v-icon>
             Log Out
@@ -45,8 +39,17 @@
 
     <v-navigation-drawer temporary absolute v-model="sideNav">
       <v-list>
-        <v-list-item>
-          <v-icon class="mdi mdi-login">Login</v-icon>
+        <v-list-item v-if="menuItems.login.login">
+          <v-icon class="mdi mdi-login" @click="onLoadLogin">  Login</v-icon>
+        </v-list-item>
+        <v-list-item v-if="menuItems.register.register">
+          <v-icon class="mdi mdi-account-plus" @click="onLoadSignUp">  Sign Up</v-icon>
+        </v-list-item>
+        <v-list-item v-if="menuItems.history.history">
+          <v-icon class="mdi mdi-history" @click="onLoadHistory">  History</v-icon>
+        </v-list-item>
+        <v-list-item v-if="menuItems.logout.logout">
+          <v-icon class="mdi mdi-logout" @click="onLogout">  Log Out</v-icon>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -122,7 +125,17 @@
     methods:{
       onLogout(){
         this.$store.dispatch('logout')
-      }
+        this.$router.push('/')
+      },
+      onLoadHistory(){
+        this.$router.push('/History/')
+      },
+      onLoadLogin(){
+        this.$router.push('/Login/')
+      },
+      onLoadSignUp(){
+        this.$router.push('/Register/')
+      },
     }
     // data: () => ({
     //   sideNav:false

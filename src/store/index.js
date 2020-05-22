@@ -7,18 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         user:null,
-        recognitions:[
-            {
-                imageUrl:'https://pic4.zhimg.com/80/v2-3186cceadf7ac4bf46152160cb787704_720w.jpg',
-                id:'dasdwadasdasdaw',
-                date:'2020-05-07'
-            },
-            {
-                imageUrl:'https://pic1.zhimg.com/80/4a1664c72efc37ee89cbefa76dc86cbb_720w.jpg',
-                id:'dasdwadas312312w',
-                date:'2020-05-08'
-            }
-        ],
+        recognitions:[],
+        resultsAll:[],
         result:{}
     },
     mutations: {
@@ -30,6 +20,9 @@ export default new Vuex.Store({
         },
         recognitionHis(state,payload){
             state.recognitions = payload
+        },
+        resultsAll(state,payload){
+            state.resultsAll = payload
         },
         setResult(state,payload){
             state.result = payload
@@ -83,7 +76,7 @@ export default new Vuex.Store({
         },
         recognitionReq({commit, getters},payload){
             const recognition = {
-                result:'',
+                results:'',
                 userId:'',
                 date:payload.date.toISOString()
             }
@@ -131,12 +124,34 @@ export default new Vuex.Store({
                         id:key,
                         imageUrl:obj[key].imageUrl,
                         date:obj[key].date,
-                        result:obj[key].result,
+                        results:obj[key].results,
                         description:obj[key].description,
                         userId:obj[key].userId
                     })
                 }
                 commit('recognitionHis',recognitions)
+            }).catch((error)=>{
+                alert(error)
+            })
+        },
+        results({commit}){
+            firebase.database().ref('recognitions').once('value').then((data)=>{
+                const resultsAll = []
+                const obj = data.val()
+                for(let key in obj){
+                    if(obj[key].results){
+                        resultsAll.push({
+                            id:key,
+                            imageUrl:obj[key].imageUrl,
+                            results:obj[key].results,
+                        })
+                    }
+                }
+                const sorted = resultsAll.sort((resultA,resultB)=>{
+                    return resultB.results[0].probability - resultA.results[0].probability
+                })
+                console.log(sorted)
+                commit('resultsAll',sorted)
             }).catch((error)=>{
                 alert(error)
             })
@@ -167,6 +182,9 @@ export default new Vuex.Store({
                     return recognition.id === recognitionId
                 })
             }
+        },
+        results(state){
+            return state.resultsAll
         },
         result(state){
             return state.result
