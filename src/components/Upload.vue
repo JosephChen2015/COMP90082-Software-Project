@@ -63,11 +63,11 @@
                 }else{
                     this.uid = this.$store.getters.user.id
                 }
-                const imageData = {
-                    image:this.image,
-                    date:new Date(),
-                }
-                this.$store.dispatch('recognitionReq',imageData)
+                // const imageData = {
+                //     image:this.image,
+                //     date:new Date(),
+                // }
+                // this.$store.dispatch('recognitionReq',imageData)
                 this.imageBase64 = this.imageUrl.slice(this.imageUrl.lastIndexOf(',')+1)
                 this.axios.post('/recog/recogUploadApi',{uid:this.uid,imageBase64:this.imageBase64,date:new Date()}).then((res)=> {
                     if(res.data.classified){
