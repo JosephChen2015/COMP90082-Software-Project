@@ -12,7 +12,7 @@
                     >
                     </v-img>
                     <v-card-text>
-                        <div v-for="detail in result.results" :key="detail.name">Result:{{detail.name}}</div>
+                        <div v-for="detail in result.results" :key="detail.name">Result:{{detail.name}}  Probability:{{detail.probability}}</div>
                         <div v-for="detail in result.results" :key="detail.name">Description:<a :href="wiki" >Find more details about {{detail.name}} on Wiki</a></div>
                     </v-card-text>
                     <v-card-actions>

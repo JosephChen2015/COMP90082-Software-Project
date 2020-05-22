@@ -14,8 +14,9 @@
                     </v-img>
                     <v-card-text>
                         <div>Date:{{recognition.date}}</div>
-                        <div>Result:{{recognition.result}}</div>
-                        <div>Description</div>
+                        <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}  Probability:{{result.probability}}</div>
+                        <div v-for="result in recognition.results" :key="result.name">Description:<a :href="wiki" >Find more details about {{result.name}} on Wiki</a></div>
+                        <div ></div>
                     </v-card-text>
                     <v-card-actions>
 
