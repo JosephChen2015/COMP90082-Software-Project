@@ -15,7 +15,7 @@
                     <v-card-text>
                         <div>Date:{{recognition.date}}</div>
                         <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}  Probability:{{result.probability}}</div>
-                        <div v-for="result in recognition.results" :key="result.name">Description:<a :href="wiki" >Find more details about {{result.name}} on Wiki</a></div>
+                        <div v-for="result in recognition.results" :key="result.name">Description:<a :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
                         <div ></div>
                     </v-card-text>
                     <v-card-actions>
@@ -36,8 +36,12 @@
                 console.log(this.id)
                 console.log(this.$store.getters.recognition(this.id))
                 return this.$store.getters.recognition(this.id)
-            }
-        }
+            },
+            // wiki(){
+            //     const url = 'https://en.wikipedia.org/wiki/' + this.$store.getters.recognition(this.id).results[0].name
+            //     return url
+            // }
+        },
     }
 </script>
 

@@ -64,7 +64,7 @@
                             </v-layout>
                             <v-layout row>
                                 <v-flex xs12>
-                                    <v-btn type="submit">Register</v-btn>
+                                    <v-btn type="submit" :disabled="isConfirmed">Register</v-btn>
                                 </v-flex>
                             </v-layout>
                         </form>
@@ -88,6 +88,9 @@
         computed:{
             comparePasswords(){
                 return this.password !== this.confirmPassword ? 'Password does not match!':''
+            },
+            isConfirmed(){
+                return this.password !== this.confirmPassword
             },
             user(){
                 return this.$store.getters.user

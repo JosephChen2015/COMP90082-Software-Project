@@ -13,7 +13,7 @@
                     </v-img>
                     <v-card-text>
                         <div v-for="detail in result.results" :key="detail.name">Result:{{detail.name}}  Probability:{{detail.probability}}</div>
-                        <div v-for="detail in result.results" :key="detail.name">Description:<a :href="wiki" >Find more details about {{detail.name}} on Wiki</a></div>
+                        <div v-for="detail in result.results" :key="detail.name">Description:<a :href="'https://en.wikipedia.org/wiki/'+detail.name" >Find more details about {{detail.name}} on Wiki</a></div>
                     </v-card-text>
                     <v-card-actions>
 
@@ -32,10 +32,10 @@
                 console.log(this.$store.getters.result)
                 return this.$store.getters.result
             },
-            wiki(){
-                const url = 'https://en.wikipedia.org/wiki/' + this.$store.getters.result.results[0].name
-                return url
-            }
+            // wiki(){
+            //     const url = 'https://en.wikipedia.org/wiki/' + this.$store.getters.result.results[0].name
+            //     return url
+            // }
         },
     }
 </script>
