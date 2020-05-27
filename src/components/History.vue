@@ -4,7 +4,7 @@
             <v-flex xs12 sm10 md8 offset-sm1 offset-md2>
                 <v-card class="info">
                     <v-container fluid style="padding:0">
-                        <v-layout row>
+                        <v-layout style="background-color: gray; margin-bottom: 5%" row>
                             <v-flex xs5 sm4 md3>
                                 <v-img
                                     :src="recognition.imageUrl"

@@ -1,25 +1,40 @@
 
 <template>
       <v-app id="carousel">
-      <v-content>
+      <v-content id="body">
 <!--      <v-container class="fill-height ma-0 pa-0"-->
 <!--                        fluid-->
 <!--      >-->
+<!--            <div id="mainpage" style="text-align: center;width: 100%">-->
+<!--                <img style="opacity: 0.5;width: 100%" src="../assets/12e8a6a547e317524121f7a5d6084036.gif">-->
+<!--&lt;!&ndash;            <p id="title">Welcome to Australian celebrity facial recognition</p>&ndash;&gt;-->
+<!--            </div>-->
+
+
+
+            <div style="text-align: center;margin-top: 5%">
+                  <router-link tag="v-card" to="/Upload">
+<!--                        <v-btn x-large class="blue lighten-4" >-->
+<!--                              <v-icon left class="mdi mdi-face-recognition"></v-icon>-->
+<!--                              Start Recognition now-->
+<!--                        </v-btn>-->
+                        <!--                        <v-btn x-large color="primary">Upload</v-btn>-->
+                      <a id="upload" href="Upload.vue"><img src="../assets/facial_recognition.svg">
+                      <p  class="white--text font-weight-bold" style="font-size:20px; font-family: Chalkboard; text-decoration: underline">Click Here to Start a Recognition Now</p>
+                      </a>
+                  </router-link>
+            </div>
             <v-row class="mb-12">
                   <v-col class="mx-auto my-0"  style="height: 600px" cols="10">
                         <div class="scroll">
                               <swiper :options="swiperOption" ref="mySwiper">
                                     <!-- slides -->
-                                    <swiper-slide><v-img :src="results[0].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[1].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[2].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[3].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[4].imageUrl" style="border-radius: 5px; max-height:500px; max-width:500px"></v-img></swiper-slide>
-<!--                                    <swiper-slide>1</swiper-slide>-->
-<!--                                    <swiper-slide>2</swiper-slide>-->
-<!--                                    <swiper-slide>3</swiper-slide>-->
-<!--                                    <swiper-slide>4</swiper-slide>-->
-<!--                                    <swiper-slide>5</swiper-slide>-->
+                                    <swiper-slide><v-img :src="results[0].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[1].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[2].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[3].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[4].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
+
 
                                     <!-- Optional controls -->
                                     <div class="swiper-pagination "  slot="pagination"></div>
@@ -31,40 +46,18 @@
 
                   </v-col>
             </v-row>
-            <v-row  justify="center" align="center">
-                  <v-col align-self="center" md="2">
-                        <v-btn x-large color="primary">Login</v-btn>
-                  </v-col>
-                  <v-col align-self="center" md="1">
-                        <router-link tag="v-card" to="/Upload">
-                              <v-btn x-large color="primary">Upload</v-btn>
-                        </router-link>
-                  </v-col>
-            </v-row>
-<!--            <v-row class="mx-auto">-->
-<!--                  <v-col>-->
-<!--                        <v-btn>Login</v-btn>-->
+<!--            <v-row  justify="center" align="center">-->
+<!--                  <v-col align-self="center" md="2">-->
+<!--                        <v-btn x-large color="primary">Login</v-btn>-->
 <!--                  </v-col>-->
-<!--                  <v-col>-->
-<!--                        <v-btn>Upload</v-btn>-->
-<!--                  </v-col>-->
-<!--            </v-row>-->
-<!--            <v-row class="mx-auto">-->
-<!--                  <v-col-->
-<!--                        cols="2"-->
-<!--                        style="height: 500px"-->
-<!--                  >-->
-<!--                        <v-btn>Login</v-btn>-->
-<!--                  </v-col>-->
-<!--                  <v-col-->
-<!--                        cols="6"-->
-<!--                        md="2"-->
-<!--                  >-->
-<!--                        <v-btn>Upload</v-btn>-->
+<!--                  <v-col align-self="center" md="1">-->
+<!--                        <router-link tag="v-card" to="/Upload">-->
+<!--                              <v-btn x-large color="primary">Upload</v-btn>-->
+<!--                        </router-link>-->
 <!--                  </v-col>-->
 <!--            </v-row>-->
 
-<!--      </v-container>-->
+<!--            <div><v-img src="@/assets/16pic_9321443_b.jpg"></v-img></div>-->
       </v-content>
       </v-app>
 </template>
@@ -79,12 +72,14 @@
             },
             data () {
                   return {
+
                         //页面布局
                         alignment:'center',
                         //轮播图
                         swiperOption: {
+                              autoHeight:true,
                               notNextTick: true,
-                              loop:true,
+                              loop:false,
                               //设定初始化时slide的索引
                               initialSlide:0,
                               //自动播放
@@ -144,8 +139,40 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
+    *{
+        margin:0;
+        padding: 0;
+    }
+      #body{
+         width: 100%;
+            /*opacity: 0.85;*/
+            background: url('../assets/poly-bg6.jpg') no-repeat center center fixed;
+            background-size: 110%;
+      ;
+      }
+      #mainpage{
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          background: url('../assets/12e8a6a547e317524121f7a5d6084036.gif') no-repeat center center fixed;
+          background-size: 110%;
+      }
+      #upload{
+          font-size:20px;
+          font-family: Chalkboard;
+          text-underline: white;
+          margin-top: 20px;
+      }
+      #title{
+          font-weight: bold;
+          font-family: "Krungthep";
+          color: aliceblue;
+          font-size: 30px;
+      }
       h1, h2 {
+          /*font-family: Tahoma;*/
+            color: aliceblue;
             font-weight: normal;
       }
       ul {
@@ -157,10 +184,11 @@
             margin: 0 10px;
       }
       a {
-            color: #42b983;
+          text-decoration: white ;
       }
-      .swiper-slide{
-            height:500px;
+      .swiper-container{
+            height:600px;
+            width: 100%;
       }
 
 </style>

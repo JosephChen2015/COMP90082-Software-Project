@@ -1,13 +1,14 @@
 <template>
-    <v-container>
+    <v-container id="login">
         <v-flex xs12 sm6 offset-sm3>
-            <v-card name="LoginCard">
+            <v-card id="loginCard" style="margin-top: 25%" name="LoginCard">
                 <v-card-text>
                     <v-container>
-                        <form @submit.prevent="onLogin">
+                        <form  @submit.prevent="onLogin">
                             <v-layout row>
                                 <v-flex xs12>
                                     <v-text-field
+                                            background-color="rgba(193, 195, 196, 0.56)"
                                             solo
                                             name="email"
                                             lable="Mail"
@@ -23,6 +24,7 @@
                             <v-layout row>
                                 <v-flex xs12>
                                     <v-text-field
+                                            background-color="rgba(193, 195, 196, 0.56)"
                                             solo
                                             required
                                             name="password"
@@ -35,9 +37,9 @@
                                     </v-text-field>
                                 </v-flex>
                             </v-layout>
-                            <v-layout row>
+                            <v-layout style="text-align: center" row>
                                 <v-flex xs12>
-                                    <v-btn type="submit">Login</v-btn>
+                                    <v-btn style="background-color: rgba(193, 195, 196, 0.56)" type="submit">Login</v-btn>
                                 </v-flex>
                             </v-layout>
                         </form>
@@ -76,3 +78,10 @@
         }
     }
 </script>
+<style>
+    #loginCard{
+        background: rgba(193, 195, 196, 0.56);
+    }
+
+
+</style>

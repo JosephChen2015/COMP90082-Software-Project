@@ -2,43 +2,50 @@
 
 <template>
   <v-app>
-    <v-app-bar class="blue lighten-4" elevate-on-scroll scroll-target="#scrolling-techniques" style="height: 64px">
-      <v-app-bar-nav-icon @click="sideNav = !sideNav"></v-app-bar-nav-icon>
-      <router-link tag="v-card" to="/" style="cursor:pointer"><v-toolbar-title>Celebrities Recognition</v-toolbar-title></router-link>
+    <v-app-bar color="#114155" elevate-on-scroll scroll-target="#scrolling-techniques" style="height: 64px">
+      <v-app-bar-nav-icon class="white--text" @click="sideNav = !sideNav"></v-app-bar-nav-icon>
+      <router-link tag="v-card" to="/" style="cursor:pointer"><v-toolbar-title class="white--text">Celebrities Recognition</v-toolbar-title></router-link>
       <v-spacer></v-spacer>
       <v-toolbar-items style="height: 59px">
-        <v-btn v-if="menuItems.login.login" class="blue lighten-4" @click="onLoadLogin">
-            <v-icon left class="mdi mdi-login"></v-icon>
-            Login
+        <v-btn color="#114155" @click="onLoadHome">
+          <v-icon left class="mdi mdi-home white--text"></v-icon>
+          <div class="white--text">Home</div>
         </v-btn>
-        <v-btn v-if="menuItems.register.register" class="blue lighten-4" @click="onLoadSignUp">
-            <v-icon left class="mdi mdi-account-plus"></v-icon>
-            Sign Up
+        <v-btn v-if="menuItems.login.login" color="#114155" @click="onLoadLogin">
+            <v-icon left class="mdi mdi-login white--text"></v-icon>
+          <div class="white--text">Login</div>
         </v-btn>
-          <v-btn v-if="menuItems.history.history" class="blue lighten-4" @click="onLoadHistory">
-            <v-icon left class="mdi mdi-history"></v-icon>
-            History
+        <v-btn v-if="menuItems.register.register" color="#114155" @click="onLoadSignUp">
+            <v-icon left class="mdi mdi-account-plus white--text"></v-icon>
+          <div class="white--text">Sign Up</div>
+        </v-btn>
+          <v-btn v-if="menuItems.history.history" color="#114155" @click="onLoadHistory">
+            <v-icon left class="mdi mdi-history white--text"></v-icon>
+            <div class="white--text">History</div>
           </v-btn>
-        <v-btn v-if="menuItems.logout.logout" @click="onLogout" class="blue lighten-4">
-            <v-icon left class="mdi mdi-logout"></v-icon>
-            Log Out
+        <v-btn v-if="menuItems.logout.logout" @click="onLogout" color="#114155">
+            <v-icon left class="mdi mdi-logout white--text"></v-icon>
+          <div class="white--text">Log Out</div>
         </v-btn>
 
 
       </v-toolbar-items>
     </v-app-bar>
+    <div id="main">
     <v-sheet
             id="scrolling-techniques"
             class="overflow-y-auto"
-            max-height="900"
+
     >
       <v-container style="height: 1500px">
         <div><router-view></router-view></div>
       </v-container>
     </v-sheet>
-
     <v-navigation-drawer temporary absolute v-model="sideNav">
       <v-list>
+        <v-list-item>
+          <v-icon class="mdi mdi-home" @click="onLoadHome">  Home</v-icon>
+        </v-list-item>
         <v-list-item v-if="menuItems.login.login">
           <v-icon class="mdi mdi-login" @click="onLoadLogin">  Login</v-icon>
         </v-list-item>
@@ -53,6 +60,7 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    </div>
 
 
   </v-app>
@@ -73,29 +81,10 @@
     directives: {
       swiper: directive
     },
-    // computed:{
-    //   swiper(){
-    //     return this.$refs.mySwiper.swiper
-    //   }
-    // },
-    // mounted() {
-    //   console.log('mounted');
-    // },
+
 
     data(){
       return{
-        // swiperOption:{
-        //   notNextTick:true,
-        //   autoplay:3000,
-        //   effect:"coverflow",
-        //   grabCursor:true,
-        //   setWrapperSize:true,
-        //   pagination:'.swiper-pagination',
-        //   paginationClickable:true,
-        //   prevButton:".swiper-button-prev",
-        //   nextButton:".swiper-button-next",
-        //   observeParents:true,
-        // },
         sideNav:false,
 
       }
@@ -103,6 +92,7 @@
     computed:{
       menuItems(){
         let menuItems = {
+          home:{home:true, title: 'Home'},
         login:{login:true, title: 'Login'},
         register:{register:true, title: 'Register'},
         history:{history:false, title: 'History'},
@@ -110,7 +100,7 @@
       }
         if(this.userIsAuthenticated){
           menuItems = {
-          login:{login:false, title:'Login'},
+            login:{login:false, title:'Login'},
           register:{register:false, title:'Register'},
           history:{history:true, title:'History'},
           logout:{logout:true, title: 'Logout'}
@@ -127,6 +117,9 @@
         this.$store.dispatch('logout')
         this.$router.push('/')
       },
+      onLoadHome(){
+        this.$router.push('/')
+      },
       onLoadHistory(){
         this.$router.push('/History/')
       },
@@ -139,6 +132,16 @@
     }
     // data: () => ({
     //   sideNav:false
-    // }),
+    // }
   };
 </script>
+<style>
+  #scrolling-techniques{
+    /*opacity: 0.85;*/
+
+    background: url('assets/poly-bg6.jpg') no-repeat center center fixed;
+    background-size: 110%;
+
+  }
+</style>
+

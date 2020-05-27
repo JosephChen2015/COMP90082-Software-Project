@@ -2,15 +2,17 @@
     <v-container>
         <v-layout row>
             <v-flex xs12>
-                <form @submit.prevent="onUpload">
+                <form @submit.prevent="onUpload" style="margin-top:10%; text-align: center">
                     <v-layout row>
-                        <v-flex xs12 sm6 offset-sm3>
-                            <h1>Start a Recognition!</h1>
+                        <v-flex xs12 sm6 offset-sm3 style="margin-bottom: 5%">
+                            <h1 style="font-family: Krungthep">Start a Recognition!</h1>
                         </v-flex>
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-btn raised class="primary" @click="onPickFile">Upload Image</v-btn>
+                            <v-btn  x-large raised color="#47B5AA" style="margin-bottom: 5%; font-family: Chalkduster" @click="onPickFile">Upload Image
+                                <v-icon right dark class="mdi mdi-cloud-upload"></v-icon>
+                            </v-btn>
                             <input type="file"
                                    style="display:none"
                                    ref="fileInput"
@@ -25,7 +27,9 @@
                     </v-layout>
                     <v-layout row>
                         <v-flex xs12 sm6 offset-sm3>
-                            <v-btn class="primary" :disabled="!formIsValid" type="submit">Recognize</v-btn>
+                            <v-btn x-large color="#47B5AA" style="margin-top: 5%; font-family: Chalkduster" :disabled="!formIsValid" type="submit">Recognize
+                                <v-icon right class="mdi mdi-face-recognition"></v-icon>
+                            </v-btn>
                         </v-flex>
                     </v-layout>
                 </form>

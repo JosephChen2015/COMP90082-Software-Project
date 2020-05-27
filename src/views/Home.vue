@@ -15,3 +15,9 @@ export default {
   }
 }
 </script>
+<!--<style>-->
+<!--  {-->
+<!--    background: url('../assets/16pic_9321443_b.jpg') no-repeat center center fixed;-->
+<!--    background-size: cover;-->
+<!--  }-->
+<!--</style>-->

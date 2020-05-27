@@ -1,13 +1,14 @@
 <template>
     <v-container>
         <v-flex xs12 sm6 offset-sm3>
-            <v-card name="registerCard">
+            <v-card id="RegisterCard" style="margin-top: 20%" name="registerCard">
                 <v-card-text>
                     <v-container>
                         <form @submit.prevent="onRegister">
                             <v-layout row>
                                 <v-flex xs12>
                                     <v-text-field
+                                            background-color="rgba(193, 195, 196, 0.56)"
                                             solo
                                             name="username"
                                             lable="Username"
@@ -19,6 +20,7 @@
 
                                     </v-text-field>
                                     <v-text-field
+                                            background-color="rgba(193, 195, 196, 0.56)"
                                             solo
                                             name="email"
                                             lable="Mail"
@@ -34,6 +36,7 @@
                             <v-layout row>
                                 <v-flex xs12>
                                     <v-text-field
+                                            background-color="rgba(193, 195, 196, 0.56)"
                                             solo
                                             required
                                             name="password"
@@ -49,6 +52,7 @@
                             <v-layout row>
                                 <v-flex xs12>
                                     <v-text-field
+                                            background-color="rgba(193, 195, 196, 0.56)"
                                             solo
                                             required
                                             placeholder="Confirm Password"
@@ -62,9 +66,9 @@
                                     </v-text-field>
                                 </v-flex>
                             </v-layout>
-                            <v-layout row>
+                            <v-layout style="text-align: center" row>
                                 <v-flex xs12>
-                                    <v-btn type="submit">Register</v-btn>
+                                    <v-btn style="background-color: rgba(193, 195, 196, 0.56)" type="submit">Register</v-btn>
                                 </v-flex>
                             </v-layout>
                         </form>
@@ -107,3 +111,8 @@
         }
     }
 </script>
+<style>
+    #RegisterCard{
+        background: rgba(193, 195, 196, 0.56);
+    }
+</style>
