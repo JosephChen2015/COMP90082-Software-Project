@@ -17,7 +17,7 @@
 
                         <div v-for="detail in result.results" :key="detail.name"><div id="name">This is {{detail.name}}</div><br><div class="detail"> Probability:{{detail.probability}}</div></div>
 <!--                        <div v-for="detail in result.results" :key="detail.name"><a class="detail" style="color: aquamarine;text-decoration:underline " :href="wiki" >Find more details about {{detail.name}} on Wiki</a></div>-->
-                        <div v-for="result in recognition.results" :key="result.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
+                        <div v-for="result in result.results" :key="result.name"><a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
                         <div style="text-align: center">
                             <router-link tag="v-card" to="/Upload">
                                 <v-btn  large raised color="#47B5AA" style="margin-top:2%; font-family: Chalkduster">Start Another <br>Recognition
