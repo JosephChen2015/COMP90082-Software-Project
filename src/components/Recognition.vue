@@ -2,22 +2,28 @@
     <v-container>
         <v-layout row wrap>
             <v-flex xs12>
-                <v-card>
-                    <v-card-title>
-                        <h5 class="primary--text">Recognition</h5>
+                <v-card id="rec">
+                    <v-card-title style="text-align: center" class="justify-center">
+                        <h5 class="white--text">Here is your result</h5>
                     </v-card-title>
                     <v-img
                             :src="recognition.imageUrl"
-                            height="400px"
-                            style="border-radius: 5px"
+                            width="50%"
+                            height="50%"
+                            style="border-radius:10%;margin: 0 auto"
                     >
                     </v-img>
-                    <v-card-text>
-                        <div>Date:{{recognition.date}}</div>
-                        <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}  Probability:{{result.probability}}</div>
-                        <div v-for="result in recognition.results" :key="result.name">Description:<a :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
-                        <div ></div>
-                    </v-card-text>
+                        <v-card-text id="recognition">
+                            <div>Date:{{recognition.date}}</div>
+                            <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}<br>  Probability:{{result.probability}}</div>
+                            <div v-for="result in recognition.results" :key="result.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
+                            <div ></div>
+                        </v-card-text>
+                           <router-link tag="v-card" to="/Upload">
+                           <v-btn  large raised color="#47B5AA" style="font-family: Chalkduster">Start Another <br>Recognition
+                               <v-icon right dark class="mdi mdi-face-recognition"></v-icon>
+                           </v-btn>
+                           </router-link>
                     <v-card-actions>
 
                     </v-card-actions>
@@ -46,5 +52,18 @@
 </script>
 
 <style scoped>
-
+#rec{
+    background: url('../assets/poly-bg6.jpg') no-repeat center center fixed;
+    background-size: 110% 110%;
+    text-align: center;
+}
+#recognition{
+    font-family: Futura;
+    color: white;
+}
+h5{
+    text-align: center;
+    font-family: Futura;
+    font-size: 20px;
+}
 </style>

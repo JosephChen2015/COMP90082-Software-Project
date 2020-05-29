@@ -11,8 +11,9 @@
 <!--            </div>-->
 
 
-
-            <div style="text-align: center;margin-top: 5%">
+<div id="mainpage">
+            <div style="text-align: center;margin-top: 10%">
+                <h1 style="font-family: Krungthep; margin-bottom: 10%" class="font-weight-bold">Welcome to our AU celebrity recognition website</h1>
                   <router-link tag="v-card" to="/Upload">
 <!--                        <v-btn x-large class="blue lighten-4" >-->
 <!--                              <v-icon left class="mdi mdi-face-recognition"></v-icon>-->
@@ -20,24 +21,25 @@
 <!--                        </v-btn>-->
                         <!--                        <v-btn x-large color="primary">Upload</v-btn>-->
                       <a id="upload" href="Upload.vue"><img src="../assets/facial_recognition.svg">
-                      <p  class="white--text font-weight-bold" style="font-size:20px; font-family: Chalkboard; text-decoration: underline">Click Here to Start a Recognition Now</p>
+                      <div  class="text white--text font-weight-bold" >Click Here to Start a Recognition Now</div>
                       </a>
                   </router-link>
             </div>
+</div>
             <v-row class="mb-12">
-                  <v-col class="mx-auto my-0"  style="height: 600px" cols="10">
+                  <v-col class="mx-auto my-0"  style="height: 400px" cols="10">
                         <div class="scroll">
                               <swiper :options="swiperOption" ref="mySwiper">
                                     <!-- slides -->
-                                    <swiper-slide><v-img :src="results[0].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[1].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[2].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[3].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[4].imageUrl" style="height: 600px; width: 100%"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[0].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[1].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[2].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[3].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[4].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
 
 
                                     <!-- Optional controls -->
-                                    <div class="swiper-pagination "  slot="pagination"></div>
+                                    <div class="swiper-pagination "  slot="pagination" style="font-size: 1vw"></div>
                                     <div class="swiper-button-prev swiper-button-black" slot="button-prev"></div>
                                     <div class="swiper-button-next swiper-button-black" slot="button-next"></div>
                                     <!-- <div class="swiper-scrollbar"   slot="scrollbar"></div> -->
@@ -148,16 +150,35 @@
          width: 100%;
             /*opacity: 0.85;*/
             background: url('../assets/poly-bg6.jpg') no-repeat center center fixed;
-            background-size: 110%;
+            background-size: 110% 110%;
+
       ;
       }
-      #mainpage{
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          background: url('../assets/12e8a6a547e317524121f7a5d6084036.gif') no-repeat center center fixed;
-          background-size: 110%;
+      .text{
+          font-size:3vw;
+          font-family: 'Times New Roman';
+          text-decoration: underline;
+          margin-bottom: 10%;
       }
+      @media screen and (min-width: 600px){
+          .text{
+              font-size: 18px;
+          }
+      }
+    .swiper-button-next,
+    .swiper-button-prev{
+        color: #112533;
+        /*height: 10px;*/
+        /*width: 5px;*/
+    }
+
+      /*#mainpage{*/
+      /*    margin: 0;*/
+      /*    padding: 0;*/
+      /*    width: 100%;*/
+      /*    background: url('../assets/12e8a6a547e317524121f7a5d6084036.gif') no-repeat center center fixed;*/
+      /*    background-size: cover;*/
+      /*}*/
       #upload{
           font-size:20px;
           font-family: Chalkboard;
@@ -187,8 +208,8 @@
           text-decoration: white ;
       }
       .swiper-container{
-            height:600px;
-            width: 100%;
+            height: 40vw;
+            width: 50vw;
       }
 
 </style>

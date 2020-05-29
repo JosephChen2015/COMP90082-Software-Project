@@ -3,28 +3,29 @@
         <v-layout row wrap>
             <v-flex xs12>
                 <v-card id="res">
-                    <v-card-title>
+                    <v-card-title class="justify-center">
                         <h5 class="white--text">Here is your result</h5>
                     </v-card-title>
                     <v-img
                             :src="result.imageUrl"
-                            style="border-radius: 5px"
+                            width="50%"
+                            height="50%"
+                            style="border-radius:10%;margin: 0 auto"
                     >
                     </v-img>
-                    <v-card-text style="text-align: center" id="result">
+                    <v-card-text style="text-align: center; font-family: Futura" id="result">
 
-                        <div v-for="detail in result.results" :key="detail.name">Result:{{detail.name}}<br>  Probability:{{detail.probability}}</div>
-                        <div v-for="detail in result.results" :key="detail.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="wiki" >Find more details about {{detail.name}} on Wiki</a></div>
-
+                        <div v-for="detail in result.results" :key="detail.name"><div style="font-size:x-large; margin: 0 0">This is {{detail.name}}</div><br>  Probability:{{detail.probability}}</div>
+<!--                        <div v-for="detail in result.results" :key="detail.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="wiki" >Find more details about {{detail.name}} on Wiki</a></div>-->
+                        <div v-for="result in recognition.results" :key="result.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
                         <div style="text-align: center">
                             <router-link tag="v-card" to="/Upload">
-                                <v-btn  large raised color="#47B5AA" style="margin-top: 2%; font-family: Chalkduster">Upload Another Image
-                                    <v-icon right dark class="mdi mdi-cloud-upload"></v-icon>
+                                <v-btn  large raised color="#47B5AA" style="margin-top:2%; font-family: Chalkduster">Start Another <br>Recognition
+                                    <v-icon right dark class="mdi mdi-face-recognition"></v-icon>
                                 </v-btn>
                             </router-link>
                         </div>
 
-                        <v-col></v-col>
                     </v-card-text>
                     <v-card-actions>
 
@@ -38,15 +39,16 @@
 <script>
     export default {
         name: "Result",
+
         computed:{
             result(){
                 console.log(this.$store.getters.result)
                 return this.$store.getters.result
             },
-            wiki(){
-                const url = 'https://en.wikipedia.org/wiki/' + this.$store.getters.result.results[0].name
-                return url
-            }
+            // wiki(){
+            //     const url = 'https://en.wikipedia.org/wiki/' + this.$store.getters.result.results[0].name
+            //     return url
+            // }
         },
     }
 </script>
@@ -54,7 +56,7 @@
 <style scoped>
 #res{
     background: url('../assets/poly-bg6.jpg') no-repeat center center fixed;
-    background-size: 110%;
+    background-size: 110% 110%;
 }
 #result{
     font-family: Futura;

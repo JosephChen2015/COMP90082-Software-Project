@@ -4,9 +4,9 @@
   <v-app>
     <v-app-bar color="#114155" elevate-on-scroll scroll-target="#scrolling-techniques" style="height: 64px">
       <v-app-bar-nav-icon class="white--text" @click="sideNav = !sideNav"></v-app-bar-nav-icon>
-      <router-link tag="v-card" to="/" style="cursor:pointer"><v-toolbar-title class="white--text">Celebrities Recognition</v-toolbar-title></router-link>
+      <router-link tag="v-card" to="/" style="cursor:pointer; font-family: 'Bradley Hand'"><v-toolbar-title class="white--text">Celebrities Recognition</v-toolbar-title></router-link>
       <v-spacer></v-spacer>
-      <v-toolbar-items style="height: 59px">
+      <v-toolbar-items id="items" style="height: 59px; font-family: 'Bradley Hand'">
         <v-btn color="#114155" @click="onLoadHome">
           <v-icon left class="mdi mdi-home white--text"></v-icon>
           <div class="white--text">Home</div>
@@ -41,22 +41,22 @@
         <div><router-view></router-view></div>
       </v-container>
     </v-sheet>
-    <v-navigation-drawer temporary absolute v-model="sideNav">
-      <v-list>
+    <v-navigation-drawer temporary absolute v-model="sideNav" color="#114155">
+      <v-list class="list">
         <v-list-item>
-          <v-icon class="mdi mdi-home" @click="onLoadHome">  Home</v-icon>
+          <v-icon class="mdi mdi-home white--text" @click="onLoadHome">  Home</v-icon>
         </v-list-item>
         <v-list-item v-if="menuItems.login.login">
-          <v-icon class="mdi mdi-login" @click="onLoadLogin">  Login</v-icon>
+          <v-icon class="mdi mdi-login white--text" @click="onLoadLogin">  Login</v-icon>
         </v-list-item>
         <v-list-item v-if="menuItems.register.register">
-          <v-icon class="mdi mdi-account-plus" @click="onLoadSignUp">  Sign Up</v-icon>
+          <v-icon class="mdi mdi-account-plus white--text" @click="onLoadSignUp">  Sign Up</v-icon>
         </v-list-item>
         <v-list-item v-if="menuItems.history.history">
-          <v-icon class="mdi mdi-history" @click="onLoadHistory">  History</v-icon>
+          <v-icon class="mdi mdi-history white--text" @click="onLoadHistory">  History</v-icon>
         </v-list-item>
         <v-list-item v-if="menuItems.logout.logout">
-          <v-icon class="mdi mdi-logout" @click="onLogout">  Log Out</v-icon>
+          <v-icon class="mdi mdi-logout white--text" @click="onLogout">  Log Out</v-icon>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -90,6 +90,15 @@
       }
     },
     computed:{
+      // mini(){
+      //   switch (this.$vuetify.breakpoint.name) {
+      //     case 'xs': return true
+      //     case 'sm': return true
+      //     case 'md': return true
+      //     case 'lg': return false
+      //     case 'xl': return false
+      //   }
+      // },
       menuItems(){
         let menuItems = {
           home:{home:true, title: 'Home'},
@@ -136,12 +145,25 @@
   };
 </script>
 <style>
+  .list{
+    font-family: "Bradley Hand";
+  }
+  @media screen and (max-width: 600px) {
+    #items{
+      display: none;
+    }
+  }
+  @media screen and (max-width: 600px){
+    #drawer{
+
+    }
+  }
   #scrolling-techniques{
     /*opacity: 0.85;*/
 
     background: url('assets/poly-bg6.jpg') no-repeat center center fixed;
-    background-size: 110%;
-
+    background-size: 110% 110%;
   }
+
 </style>
 
