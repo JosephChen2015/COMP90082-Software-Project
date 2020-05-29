@@ -16,7 +16,7 @@
                         <v-card-text id="recognition">
                             <div>Date:{{recognition.date}}</div>
                             <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}<br>  Probability:{{result.probability}}</div>
-                            <div v-for="result in recognition.results" :key="result.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
+                            <div v-for="result in recognition.results" :key="result.name"><a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
                             <div ></div>
                         </v-card-text>
                            <router-link tag="v-card" to="/Upload">
@@ -64,6 +64,12 @@
 h5{
     text-align: center;
     font-family: Futura;
-    font-size: 20px;
+    font-size: 5vw;
+}
+@media screen and (min-width: 800px){
+    h5{
+        margin-top: 5%;
+        font-size: 40px;
+    }
 }
 </style>

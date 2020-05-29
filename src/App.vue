@@ -41,7 +41,7 @@
         <div><router-view></router-view></div>
       </v-container>
     </v-sheet>
-    <v-navigation-drawer temporary absolute v-model="sideNav" color="#114155">
+    <v-navigation-drawer width="160px" temporary absolute v-model="sideNav" color="#114155">
       <v-list class="list">
         <v-list-item>
           <v-icon class="mdi mdi-home white--text" @click="onLoadHome">  Home</v-icon>
@@ -87,7 +87,8 @@
       return{
         sideNav:false,
 
-      }
+    }
+
     },
     computed:{
       // mini(){
