@@ -31,11 +31,11 @@
                         <div class="scroll">
                               <swiper :options="swiperOption" ref="mySwiper">
                                     <!-- slides -->
-                                    <swiper-slide><v-img :src="results[0].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[1].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[2].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[3].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
-                                    <swiper-slide><v-img :src="results[4].imageUrl" style="border-radius: 15%; height: 40vw; width: 50vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[0].imageUrl" style="border-radius: 15%; height: 50vw; width: 40vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[1].imageUrl" style="border-radius: 15%; height: 50vw; width: 40vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[2].imageUrl" style="border-radius: 15%; height: 50vw; width: 40vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[3].imageUrl" style="border-radius: 15%; height: 50vw; width: 40vw"></v-img></swiper-slide>
+                                    <swiper-slide><v-img :src="results[4].imageUrl" style="border-radius: 15%; height: 50vw; width: 40vw"></v-img></swiper-slide>
 
 
                                     <!-- Optional controls -->
@@ -158,7 +158,7 @@
           font-size:3vw;
           font-family: 'Times New Roman';
           text-decoration: underline;
-          margin-bottom: 10%;
+          margin-bottom: 5%;
       }
       @media screen and (min-width: 600px){
           .text{
@@ -208,8 +208,8 @@
           text-decoration: white ;
       }
       .swiper-container{
-            height: 40vw;
-            width: 50vw;
+            height: 50vw;
+            width: 40vw;
       }
 
 </style>
