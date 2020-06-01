@@ -13,12 +13,11 @@
                             style="border-radius:10%;margin: 0 auto"
                     >
                     </v-img>
-                        <v-card-text id="recognition">
-                            <div>Date:{{recognition.date}}</div>
-                            <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}<br>  Probability:{{result.probability}}</div>
-                            <div><a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
-                            <div ></div>
-                        </v-card-text>
+                    <v-card-text id="recognition">
+                        <div>Date:{{recognition.date}}</div>
+                        <div v-for="result in recognition.results" :key="result.name">Result:{{result.name}}<br>  Probability:{{result.probability}}</div>
+                        <div v-for="result in recognition.results" :key="result.name">Description:<a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
+                    </v-card-text>
                            <router-link tag="v-card" to="/Upload">
                            <v-btn  large raised color="#47B5AA" style="font-family: Chalkduster">Start Another <br>Recognition
                                <v-icon right dark class="mdi mdi-face-recognition"></v-icon>

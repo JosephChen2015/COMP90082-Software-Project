@@ -16,7 +16,8 @@
                     <v-card-text style="text-align: center; font-family: Futura" id="result">
 
                         <div v-for="(detail,result) in result.results" :key="detail.name"><div id="name">This is {{detail.name}}</div><div class="detail"> Probability:{{detail.probability}}</div>
-                            <div><a style="color: aquamarine;text-decoration:underline; margin-bottom: 2px" :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div></div>
+                            <div><a style="color: aquamarine;text-decoration:underline; margin-bottom: 2px" :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>
+                        </div>
 <!--                        <div v-for="result in result.results" :key="result.name"><a style="color: aquamarine;text-decoration:underline " :href="'https://en.wikipedia.org/wiki/'+result.name" >Find more details about {{result.name}} on Wiki</a></div>-->
                         <div style="text-align: center">
                             <router-link tag="v-card" to="/Upload">
