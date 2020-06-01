@@ -46,6 +46,7 @@ def recogUploadApi():
     #     requestJson = request.json
     #     imgBase64 = requestJson["imageBase64"]
     #     userId = requestJson["uid"]
+    #     date = requestJson["date"]
     # except:
     #     return jsonify(errorInvalidJson)
     #
@@ -54,12 +55,9 @@ def recogUploadApi():
     #     classified, nameProb, imgBuffer = faceUtils.face_match_img(rgbImg)
     #     # classified, nameProb, imgBuffer = faceUtils.face_match_img("./Web/App/unknowns/test.jpg")
     #
-    #     # Get the classification time
-    #     time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
-    #
     #     # Upload the classification result to Real-time Database
     #     entryName = database.child('users/' + userId + '/' + 'recognitions').push({
-    #         "date": time, "results": nameProb, "userId": userId})["name"]
+    #         "date": date, "results": nameProb, "userId": userId})["name"]
     #
     #     # Upload the labelled image to Storage
     #     storage.child('imageLabelUploads/' + userId + '/' + entryName + '/' + 'label.jpg').put(imgBuffer)
@@ -79,12 +77,9 @@ def recogUploadApi():
 # Test function of uploading results to Real-time Database and Storage
 @app.route('/', methods=['GET', 'POST'])
 def helloWorld():
-    # Get the classification time
-    time = datetime.now().strftime("%Y/%m/%d-%H:%M:%S")
-
     # Upload the classification result to Real-time Database
     entryName = database.child('users/' + 'jingyin' + '/' + 'recognitions').push({
-        "date": time, "results": "null", "userId": "jingyin"})["name"]
+        "date": "datetime", "results": "null", "userId": "jingyin"})["name"]
 
     # Upload the labelled image to Storage
     storage.child('imageLabelUploads/' + 'jingyin' + '/' + entryName + '/' + 'label.jpg').put("test.jpeg")
